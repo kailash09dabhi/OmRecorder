@@ -1,0 +1,61 @@
+apply plugin: 'com.android.library'
+android {
+  compileSdkVersion 24
+  buildToolsVersion "24.0.0"
+
+  defaultConfig {
+    minSdkVersion 14
+    targetSdkVersion 24
+    versionCode 1
+    versionName "1.0.0"
+  }
+  buildTypes {
+    release {
+      minifyEnabled false
+      proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+    }
+  }
+}
+ext {
+  // Where you will see your artifact in Bintray's web interface
+  // The "bintrayName" should match the name of the Bintray repro.
+  bintrayRepo = 'maven'
+  bintrayName = 'om-recorder' // Has to be same as your library module name
+
+  // Maven metadata
+  publishedGroupId = 'com.kailashdabhi'
+  libraryName = 'OmRecorder'
+  // Save yourself a head ache, and set this equal to the name of the Android Studio library
+  // module. The artifact name needs to match the name of the library.
+  artifact = 'om-recorder' // Has to be same as your library module name
+
+  // Your github repo link
+  siteUrl = 'https://github.com/kailash09dabhi/OmRecorder'
+  gitUrl = 'https://github.com/kailash09dabhi/OmRecorder.git'
+
+  libraryDescription =
+      'A fluent api wrapper of AudioRecord object to record Pcm & Wav file. There is a listner apis' +
+          ' to have audio pulling and also silence detection.'
+  libraryVersion = '1.0.0'
+
+  developerId = 'kailash09dabhi'
+  developerName = 'Kailash Dabhi'
+  developerEmail = 'kailash09dabhi@gmail.com'
+
+  licenseName = 'The Apache Software License, Version 2.0'
+  licenseUrl = 'http://www.apache.org/licenses/LICENSE-2.0.txt'
+  allLicenses = ["Apache-2.0"]
+}
+
+dependencies {
+  compile fileTree(dir: 'libs', include: ['*.jar'])
+  testCompile 'junit:junit:4.12'
+  compile 'com.android.support:appcompat-v7:24.0.0'
+}
+tasks.withType(Javadoc) {
+  options.addStringOption('Xdoclint:none', '-quiet')
+  options.addStringOption('encoding', 'UTF-8')
+}
+
+apply from: 'https://raw.githubusercontent.com/kailash09dabhi/JCenter/master/installv1.gradle'
+apply from: 'https://raw.githubusercontent.com/kailash09dabhi/JCenter/master/bintrayv1.gradle'

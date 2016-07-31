@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+  <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+      android:id="@+id/main_screen"
+      android:layout_width="match_parent"
+      android:layout_height="match_parent"
+      android:background="@null"
+      android:baselineAligned="false"
+      android:clickable="false"
+      android:orientation="vertical"
+      android:padding="16dp">
+    <TextView
+        android:id="@+id/timerView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:paddingBottom="5dp"
+        android:text="00:00:00"
+        android:textColor="@android:color/black"
+        android:textSize="55sp"
+        android:textStyle="bold"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="16dp"
+        android:gravity="center"
+        android:paddingBottom="8dp"
+        android:text="Tap mic to start recording"
+        android:textAppearance="?android:textAppearanceMedium"
+        android:textColor="@android:color/black"/>
+
+    <LinearLayout
+        android:id="@+id/containerView"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:gravity="center"
+        android:orientation="vertical">
+
+      <ImageView
+          android:id="@+id/recordButton"
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:src="@drawable/ic_microphone"/>
+
+      <ImageView
+          android:id="@+id/stopButton"
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:layout_marginTop="40dp"
+          android:paddingBottom="5dp"
+          android:src="@drawable/ic_stop"/>
+    </LinearLayout>
+
+
+    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+      <CheckBox
+          android:id="@+id/skipSilence"
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:checked="false"
+          android:text="skip silence"/>
+
+
+
+    </LinearLayout>
+
+  </LinearLayout>
+</LinearLayout>
