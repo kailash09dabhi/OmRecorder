@@ -36,7 +36,7 @@ ext {
   libraryDescription =
       'A fluent api wrapper of AudioRecord object to record Pcm & Wav file. There is a listner apis' +
           ' to have audio pulling and also silence detection.'
-  libraryVersion = '1.0.0'
+  libraryVersion = '1.0.1'
 
   developerId = 'kailash09dabhi'
   developerName = 'Kailash Dabhi'
@@ -50,7 +50,6 @@ ext {
 dependencies {
   compile fileTree(dir: 'libs', include: ['*.jar'])
   testCompile 'junit:junit:4.12'
-  compile 'com.android.support:appcompat-v7:24.0.0'
 }
 tasks.withType(Javadoc) {
   options.addStringOption('Xdoclint:none', '-quiet')
