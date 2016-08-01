@@ -54,13 +54,13 @@ __Start & Stop Recording__
     recorder.stopRecording();
 ```
 
-For documentation and additional information see [the website][3].
+For documentation and additional information see [the website][1].
 
 __OmRecorder__
 
 Download
 --------
-    compile 'com.kailashdabhi:om-recorder:1.0.0'
+    compile 'com.kailashdabhi:om-recorder:1.0.1'
 License
 -------
 
@@ -77,5 +77,9 @@ License
     WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
     See the License for the specific language governing permissions and
     limitations under the License.
+
+
+ [1]: https://kailash09dabhi.github.io/OmRecorder/
+
 
 
