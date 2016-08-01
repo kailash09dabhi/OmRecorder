@@ -13,9 +13,11 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.kailashdabhi.audiorecord;
+package omrecorder;
 
 /**
+ * A {@code ThreadAction} is an action which going to be executed on the implementer thread.
+ *
  * @author Kailash Dabhi (kailash09dabhi@gmail.com)
  * @date 25-07-2016
  * @skype kailash.09
@@ -24,7 +26,7 @@ package com.kailashdabhi.audiorecord;
 interface ThreadAction {
 
   /**
-   * interface to execute {@code runnable} action on {@code Thread}
+   * Execute {@code runnable} action on implementer {@code Thread}
    */
   void execute(Runnable action);
 }

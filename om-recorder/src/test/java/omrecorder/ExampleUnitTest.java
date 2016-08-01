@@ -1,4 +1,4 @@
-package com.kingbulltechnology.audiorecorder;
+package com.kingbulltechnology.omrecorder;
 
 import org.junit.Test;
 

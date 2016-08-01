@@ -13,21 +13,26 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.kailashdabhi.audiorecord;
+package omrecorder;
 
-import android.os.Handler;
-import android.os.Looper;
+import java.io.File;
 
 /**
+ * Essential APIs for working with OmRecorder.
+ *
  * @author Kailash Dabhi (kailash09dabhi@gmail.com)
- * @date 25-07-2016
+ * @date 31-07-2016
  * @skype kailash.09
  */
+public final class OmRecorder {
+  private OmRecorder() {
+  }
 
-final class UiThread implements ThreadAction {
-  private static final Handler handler = new Handler(Looper.getMainLooper());
+  public static Recorder pcm(PullTransport pullTransport, File file) {
+    return new Pcm(pullTransport, file);
+  }
 
-  @Override public void execute(Runnable runnable) {
-    handler.post(runnable);
+  public static Recorder wav(PullTransport pullTransport, File file) {
+    return new Wav(pullTransport, file);
   }
 }

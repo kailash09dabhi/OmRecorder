@@ -13,24 +13,24 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.kailashdabhi.audiorecord;
+package omrecorder;
 
-import java.io.File;
+import android.os.Handler;
+import android.os.Looper;
 
 /**
+ * A {@code UiThread} is representation of Ui / main thread.
+ *
  * @author Kailash Dabhi (kailash09dabhi@gmail.com)
- * @date 31-07-2016
+ * @date 25-07-2016
  * @skype kailash.09
  */
-public final class OmRecorder {
-  private OmRecorder() {
-  }
 
-  public static Recorder pcm(PullTransport pullTransport, File file) {
-    return new Pcm(pullTransport, file);
-  }
+final class UiThread implements ThreadAction {
+  private static final Handler handler = new Handler(Looper.getMainLooper());
 
-  public static Recorder wav(PullTransport pullTransport, File file) {
-    return new Wav(pullTransport, file);
+  /** executes the {@code Runnable} on UI Thread. */
+  @Override public void execute(Runnable runnable) {
+    handler.post(runnable);
   }
 }

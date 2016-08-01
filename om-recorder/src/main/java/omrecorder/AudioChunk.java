@@ -13,12 +13,14 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.kailashdabhi.audiorecord;
+package omrecorder;
 
 import java.nio.ByteBuffer;
 import java.nio.ByteOrder;
 
 /**
+ * An AudioChunk is a audio data wrapper.
+ *
  * @author Kailash Dabhi (kailash09dabhi@gmail.com)
  * @date 20-07-2016
  * @skype kailash.09
@@ -31,10 +33,10 @@ public interface AudioChunk {
   short[] toShorts();
 
   final class Bytes implements AudioChunk {
-    //number denotes the bytes read in @code buffer
 
     private static final double REFERENCE = 0.6;
     final byte[] bytes;
+    //number denotes the bytes read in @code buffer
     int numberOfBytesRead;
 
     Bytes(byte[] bytes) {

@@ -13,12 +13,14 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.kailashdabhi.audiorecord;
+package omrecorder;
 
 import android.media.AudioFormat;
 import android.media.AudioRecord;
 
 /**
+ * An {@code AudioSource} is an interface to configure the Audio Source.
+ *
  * @author Kailash Dabhi (kailash09dabhi@gmail.com)
  * @date 06-07-2016
  * @skype kailash.09
@@ -34,6 +36,10 @@ public interface AudioSource {
 
   byte bitsPerSample();
 
+  /**
+   * Application should use this default implementation of {@code AudioSource} to configure the
+   * Audio Source.
+   */
   class Smart implements AudioSource {
     private final int audioSource;
     private final AudioRecord audioRecord;

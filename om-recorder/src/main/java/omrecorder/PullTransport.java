@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.kailashdabhi.audiorecord;
+package omrecorder;
 
 import android.media.AudioRecord;
 import java.io.IOException;
@@ -41,7 +41,7 @@ public interface PullTransport {
   //It immediately stop pulling {@code  AudioSource}
   void stop();
 
-  //This method returns the source which is used for pulling
+  //Returns the source which is used for pulling
   AudioSource source();
 
   /**
@@ -49,14 +49,16 @@ public interface PullTransport {
    * AudioSource}.
    */
   interface OnAudioChunkPulledListener {
+    /**
+     * Called when {@code AudioSource} is pulled and returned{@code AudioChunk}.
+     */
     void onAudioChunkPulled(AudioChunk audioChunk);
   }
 
   class AbstractPullTransport implements PullTransport {
     final AudioSource audioRecordSource;
     final OnAudioChunkPulledListener onAudioChunkPulledListener;
-    private final com.kailashdabhi.audiorecord.UiThread uiThread =
-        new com.kailashdabhi.audiorecord.UiThread();
+    private final UiThread uiThread = new UiThread();
     boolean pull;
 
     AbstractPullTransport(AudioSource audioRecordSource,

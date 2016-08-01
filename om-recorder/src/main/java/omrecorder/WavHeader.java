@@ -13,12 +13,12 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.kailashdabhi.audiorecord;
+package omrecorder;
 
 import android.media.AudioFormat;
 
 /**
- * A  Header to be appended to the end of Wave audio file
+ * A  Header to be appended to the end of Wav audio file
  *
  * @author Kailash Dabhi (kailash09dabhi@gmail.com)
  * @date 26-07-2016
@@ -33,6 +33,7 @@ final class WavHeader {
     this.totalAudioLength = totalAudioLength;
   }
 
+  /** Returns the {@code WavHeader} in bytes. */
   public byte[] toBytes() {
     long sampleRateInHz = audioRecordSource.frequency();
     int channels = (audioRecordSource.channelPositionMask() == AudioFormat.CHANNEL_IN_MONO ? 1 : 2);

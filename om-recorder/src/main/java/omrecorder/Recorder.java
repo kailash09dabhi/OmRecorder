@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.kailashdabhi.audiorecord;
+package omrecorder;
 
 /**
  * A Recorder who can start and stop recording with startRecording() and stopRecording() method
@@ -30,7 +30,16 @@ public interface Recorder {
 
   void stopRecording();
 
+  /**
+   * Interface definition for a callback to be invoked when a silence is measured.
+   */
   interface OnSilenceListener {
+
+    /**
+     * Called when a silence measured
+     *
+     * @param silenceTime The silence measured
+     */
     void onSilence(long silenceTime);
   }
 }

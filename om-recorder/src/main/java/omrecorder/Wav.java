@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.kailashdabhi.audiorecord;
+package omrecorder;
 
 import java.io.File;
 import java.io.FileInputStream;
@@ -24,6 +24,8 @@ import java.io.OutputStream;
 import java.io.RandomAccessFile;
 
 /**
+ * {@code Wav} is recorder for recording audio in wav format.
+ *
  * @author Kailash Dabhi (kailash09dabhi@gmail.com)
  * @date 31-07-2016
  * @skype kailash.09

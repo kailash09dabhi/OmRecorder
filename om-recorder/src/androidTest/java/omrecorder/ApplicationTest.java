@@ -1,4 +1,4 @@
-package com.kingbulltechnology.audiorecorder;
+package com.kingbulltechnology.omrecorder;
 
 import android.app.Application;
 import android.test.ApplicationTestCase;
