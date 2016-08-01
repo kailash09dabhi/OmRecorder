@@ -6,9 +6,9 @@ Om Recorder
 
 A Simple Pcm / Wav audio recorder with nice api. 
 
- * Record in Pcm audio
- * Record in Wav audio
- * configure audio source to have desired output
+ * Record Pcm audio
+ * Record Wav audio
+ * Configure audio source to have desired output
 
 ```java
 
@@ -18,7 +18,9 @@ A Simple Pcm / Wav audio recorder with nice api.
           animateVoice((float) (audioChunk.maxAmplitude() / 200.0));
         }
       }), file());
-     
+```   
+__For Skip Silence__
+```java
   // FOR SKIP SILENCE     
   recorder = OmRecorder.wav(
       new PullTransport.Noise(mic(), new PullTransport.OnAudioChunkPulledListener() {
@@ -36,26 +38,29 @@ A Simple Pcm / Wav audio recorder with nice api.
  @NonNull private File file() {
     return new File(Environment.getExternalStorageDirectory(), "demo.wav");
   }
-  //configure audio source
+  
+```
+__Configure Audio Source__
+```java
   private AudioSource mic() {
     return new AudioSource.Smart(MediaRecorder.AudioSource.MIC, AudioFormat.ENCODING_PCM_16BIT,
         AudioFormat.CHANNEL_IN_MONO, 44100);
   }
 
 ```
+__Start & Stop Recording__
+```java
+    recorder.startRecording();
+    recorder.stopRecording();
+```
 
 For documentation and additional information see [the website][3].
 
 __OmRecorder__
 
-
-
 Download
 --------
-
     compile 'com.kailashdabhi:om-recorder:1.0.0'
-
-```
 License
 -------
 
