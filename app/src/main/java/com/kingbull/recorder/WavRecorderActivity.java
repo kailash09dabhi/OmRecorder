@@ -12,13 +12,13 @@ import android.widget.CheckBox;
 import android.widget.CompoundButton;
 import android.widget.ImageView;
 import android.widget.Toast;
-import com.kailashdabhi.audiorecord.AudioChunk;
-import com.kailashdabhi.audiorecord.AudioSource;
-import com.kailashdabhi.audiorecord.OmRecorder;
-import com.kailashdabhi.audiorecord.PullTransport;
-import com.kailashdabhi.audiorecord.Recorder;
-import com.kailashdabhi.audiorecord.WriteAction;
 import java.io.File;
+import omrecorder.AudioChunk;
+import omrecorder.AudioSource;
+import omrecorder.OmRecorder;
+import omrecorder.PullTransport;
+import omrecorder.Recorder;
+import omrecorder.WriteAction;
 
 /**
  * Created by Kailash Dabhi on 18-07-2016.
