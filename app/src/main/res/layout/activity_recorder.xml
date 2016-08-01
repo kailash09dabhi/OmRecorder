@@ -13,16 +13,16 @@
       android:clickable="false"
       android:orientation="vertical"
       android:padding="16dp">
-    <TextView
-        android:id="@+id/timerView"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:gravity="center"
-        android:paddingBottom="5dp"
-        android:text="00:00:00"
-        android:textColor="@android:color/black"
-        android:textSize="55sp"
-        android:textStyle="bold"/>
+    <!--<TextView-->
+    <!--android:id="@+id/timerView"-->
+    <!--android:layout_width="match_parent"-->
+    <!--android:layout_height="wrap_content"-->
+    <!--android:gravity="center"-->
+    <!--android:paddingBottom="5dp"-->
+    <!--android:text="00:00:00"-->
+    <!--android:textColor="@android:color/black"-->
+    <!--android:textSize="55sp"-->
+    <!--android:textStyle="bold"/>-->
 
     <TextView
         android:layout_width="wrap_content"
@@ -31,7 +31,7 @@
         android:layout_marginTop="16dp"
         android:gravity="center"
         android:paddingBottom="8dp"
-        android:text="Tap mic to start recording"
+        android:text="click microphone to record"
         android:textAppearance="?android:textAppearanceMedium"
         android:textColor="@android:color/black"/>
 
@@ -69,7 +69,6 @@
           android:layout_height="wrap_content"
           android:checked="false"
           android:text="skip silence"/>
-
 
 
     </LinearLayout>
