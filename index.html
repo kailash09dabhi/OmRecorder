@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset='utf-8'>
+    <meta http-equiv="X-UA-Compatible" content="chrome=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <link href='https://fonts.googleapis.com/css?family=Architects+Daughter' rel='stylesheet' type='text/css'>
+    <link rel="stylesheet" type="text/css" href="stylesheets/stylesheet.css" media="screen">
+    <link rel="stylesheet" type="text/css" href="stylesheets/github-light.css" media="screen">
+    <link rel="stylesheet" type="text/css" href="stylesheets/print.css" media="print">
+
+    <!--[if lt IE 9]>
+    <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+
+    <title>Omrecorder by kailash09dabhi</title>
+  </head>
+
+  <body>
+    <header>
+      <div class="inner">
+        <h1>Omrecorder</h1>
+        <h2>A Simple Pcm / Wav audio recorder with nice api.</h2>
+        <a href="https://github.com/kailash09dabhi/OmRecorder" class="button"><small>View project on</small> GitHub</a>
+      </div>
+    </header>
+
+    <div id="content-wrapper">
+      <div class="inner clearfix">
+        <section id="main-content">
+          <p><a href="https://bintray.com/kailash09dabhi/maven/om-recorder/_latestVersion"> <img src="https://api.bintray.com/packages/kailash09dabhi/maven/om-recorder/images/download.svg" alt="Download"> </a></p>
+
+<h1>
+<a id="om-recorder" class="anchor" href="#om-recorder" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Om Recorder</h1>
+
+<p><img src="website/static/om.png" alt="Logo"></p>
+
+<p>A Simple Pcm / Wav audio recorder with nice api. </p>
+
+<ul>
+<li>Record Pcm audio</li>
+<li>Record Wav audio</li>
+<li>Configure audio source to have desired output</li>
+</ul>
+
+<div class="highlight highlight-source-java"><pre>
+  recorder <span class="pl-k">=</span> <span class="pl-smi">OmRecorder</span><span class="pl-k">.</span>wav(
+      <span class="pl-k">new</span> <span class="pl-smi">PullTransport</span>.<span class="pl-smi">Default</span>(mic(), <span class="pl-k">new</span> <span class="pl-smi">PullTransport</span>.<span class="pl-smi">OnAudioChunkPulledListener</span>() {
+        <span class="pl-k">@Override</span> <span class="pl-k">public</span> <span class="pl-k">void</span> <span class="pl-en">onAudioChunkPulled</span>(<span class="pl-smi">AudioChunk</span> <span class="pl-v">audioChunk</span>) {
+          animateVoice((<span class="pl-k">float</span>) (audioChunk<span class="pl-k">.</span>maxAmplitude() <span class="pl-k">/</span> <span class="pl-c1">200.0</span>));
+        }
+      }), file());</pre></div>
+
+<p><strong>For Skip Silence</strong></p>
+
+<div class="highlight highlight-source-java"><pre>  <span class="pl-c">// FOR SKIP SILENCE     </span>
+  recorder <span class="pl-k">=</span> <span class="pl-smi">OmRecorder</span><span class="pl-k">.</span>wav(
+      <span class="pl-k">new</span> <span class="pl-smi">PullTransport</span>.<span class="pl-smi">Noise</span>(mic(), <span class="pl-k">new</span> <span class="pl-smi">PullTransport</span>.<span class="pl-smi">OnAudioChunkPulledListener</span>() {
+          <span class="pl-k">@Override</span> <span class="pl-k">public</span> <span class="pl-k">void</span> <span class="pl-en">onAudioChunkPulled</span>(<span class="pl-smi">AudioChunk</span> <span class="pl-v">audioChunk</span>) {
+            animateVoice((<span class="pl-k">float</span>) (audioChunk<span class="pl-k">.</span>maxAmplitude() <span class="pl-k">/</span> <span class="pl-c1">200.0</span>));
+          }
+      }, <span class="pl-k">new</span> <span class="pl-smi">WriteAction</span>.<span class="pl-smi">Default</span>(), <span class="pl-k">new</span> <span class="pl-smi">Recorder</span>.<span class="pl-smi">OnSilenceListener</span>() {
+        <span class="pl-k">@Override</span> <span class="pl-k">public</span> <span class="pl-k">void</span> <span class="pl-en">onSilence</span>(<span class="pl-k">long</span> <span class="pl-v">silenceTime</span>) {
+           <span class="pl-smi">Log</span><span class="pl-k">.</span>e(<span class="pl-s"><span class="pl-pds">"</span>silenceTime<span class="pl-pds">"</span></span>, <span class="pl-smi">String</span><span class="pl-k">.</span>valueOf(silenceTime));
+           <span class="pl-smi">Toast</span><span class="pl-k">.</span>makeText(<span class="pl-smi">WavRecorderActivity</span><span class="pl-k">.</span><span class="pl-v">this</span>, <span class="pl-s"><span class="pl-pds">"</span>silence of <span class="pl-pds">"</span></span> <span class="pl-k">+</span> silenceTime <span class="pl-k">+</span> <span class="pl-s"><span class="pl-pds">"</span> detected<span class="pl-pds">"</span></span>,
+               <span class="pl-smi">Toast</span><span class="pl-c1"><span class="pl-k">.</span>LENGTH_SHORT</span>)<span class="pl-k">.</span>show();
+         }
+      }, <span class="pl-c1">200</span><span class="pl-c">/**silence threshold**/</span>), file());
+
+ @<span class="pl-smi">NonNull</span> <span class="pl-k">private</span> <span class="pl-smi">File</span> file() {
+    <span class="pl-k">return</span> <span class="pl-k">new</span> <span class="pl-smi">File</span>(<span class="pl-smi">Environment</span><span class="pl-k">.</span>getExternalStorageDirectory(), <span class="pl-s"><span class="pl-pds">"</span>demo.wav<span class="pl-pds">"</span></span>);
+  }
+</pre></div>
+
+<p><strong>Configure Audio Source</strong></p>
+
+<div class="highlight highlight-source-java"><pre>  <span class="pl-k">private</span> <span class="pl-smi">AudioSource</span> mic() {
+    <span class="pl-k">return</span> <span class="pl-k">new</span> <span class="pl-smi">AudioSource</span>.<span class="pl-smi">Smart</span>(<span class="pl-smi">MediaRecorder</span><span class="pl-k">.</span><span class="pl-smi">AudioSource</span><span class="pl-c1"><span class="pl-k">.</span>MIC</span>, <span class="pl-smi">AudioFormat</span><span class="pl-c1"><span class="pl-k">.</span>ENCODING_PCM_16BIT</span>,
+        <span class="pl-smi">AudioFormat</span><span class="pl-c1"><span class="pl-k">.</span>CHANNEL_IN_MONO</span>, <span class="pl-c1">44100</span>);
+  }
+</pre></div>
+
+<p><strong>Start &amp; Stop Recording</strong></p>
+
+<div class="highlight highlight-source-java"><pre>    recorder<span class="pl-k">.</span>startRecording();
+    recorder<span class="pl-k">.</span>stopRecording();</pre></div>
+
+<p>For documentation and additional information see [the website][3].</p>
+
+<p><strong>OmRecorder</strong></p>
+
+<h2>
+<a id="download" class="anchor" href="#download" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Download</h2>
+
+<pre><code>compile 'com.kailashdabhi:om-recorder:1.0.0'
+</code></pre>
+
+<h2>
+<a id="license" class="anchor" href="#license" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>License</h2>
+
+<pre><code>Copyright 2016 Kailash Dabhi (Kingbull Technology)
+
+Licensed under the Apache License, Version 2.0 (the "License");
+you may not use this file except in compliance with the License.
+You may obtain a copy of the License at
+
+   http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an "AS IS" BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+See the License for the specific language governing permissions and
+limitations under the License.
+</code></pre>
+        </section>
+
+        <aside id="sidebar">
+          <a href="https://github.com/kailash09dabhi/OmRecorder/zipball/master" class="button">
+            <small>Download</small>
+            .zip file
+          </a>
+          <a href="https://github.com/kailash09dabhi/OmRecorder/tarball/master" class="button">
+            <small>Download</small>
+            .tar.gz file
+          </a>
+
+          <p class="repo-owner"><a href="https://github.com/kailash09dabhi/OmRecorder"></a> is maintained by <a href="https://github.com/kailash09dabhi">kailash09dabhi</a>.</p>
+
+          <p>This page was generated by <a href="https://pages.github.com">GitHub Pages</a> using the Architect theme by <a href="https://twitter.com/jasonlong">Jason Long</a>.</p>
+        </aside>
+      </div>
+    </div>
+
+  
+  </body>
+</html>
