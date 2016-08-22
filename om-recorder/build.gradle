@@ -6,8 +6,6 @@ android {
   defaultConfig {
     minSdkVersion 14
     targetSdkVersion 24
-    versionCode 1
-    versionName "1.0.1"
   }
   buildTypes {
     release {
@@ -36,7 +34,7 @@ ext {
   libraryDescription =
       'A fluent api wrapper of AudioRecord object to record Pcm & Wav file. There is a listner apis' +
           ' to have audio pulling and also silence detection.'
-  libraryVersion = '1.0.1'
+  libraryVersion = '1.1.0'
 
   developerId = 'kailash09dabhi'
   developerName = 'Kailash Dabhi'

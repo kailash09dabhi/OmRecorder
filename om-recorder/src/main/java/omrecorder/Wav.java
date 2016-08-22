@@ -18,9 +18,7 @@ package omrecorder;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
 import java.io.IOException;
-import java.io.OutputStream;
 import java.io.RandomAccessFile;
 
 /**
@@ -30,29 +28,12 @@ import java.io.RandomAccessFile;
  * @date 31-07-2016
  * @skype kailash.09
  */
-final class Wav implements Recorder {
-  private final PullTransport pullTransport;
-  private final OutputStream outputStream;
+final class Wav extends AbstractRecorder {
   private final RandomAccessFile wavFile;
-  private final File pcmFile;
 
   public Wav(PullTransport pullTransport, File file) {
-    if (file == null) throw new RuntimeException("file is null !");
-    this.pullTransport = pullTransport;
-    this.pcmFile = file;
-    this.outputStream = outputStream(file);
+    super(pullTransport,file);
     this.wavFile = randomAccessFile(file);
-  }
-
-  private OutputStream outputStream(File file) {
-    OutputStream outputStream;
-    try {
-      outputStream = new FileOutputStream(file);
-    } catch (FileNotFoundException e) {
-      throw new RuntimeException("could not build OutputStream from" +
-          " this file" + file.getName(), e);
-    }
-    return outputStream;
   }
 
   private RandomAccessFile randomAccessFile(File file) {
@@ -65,20 +46,8 @@ final class Wav implements Recorder {
     return randomAccessFile;
   }
 
-  @Override public void startRecording() {
-    new Thread(new Runnable() {
-      @Override public void run() {
-        try {
-          pullTransport.start(outputStream);
-        } catch (IOException e) {
-          new RuntimeException(e);
-        }
-      }
-    }).start();
-  }
-
   @Override public void stopRecording() {
-    pullTransport.stop();
+    super.stopRecording();
     try {
       writeWavHeader();
     } catch (IOException e) {
@@ -86,7 +55,7 @@ final class Wav implements Recorder {
   }
 
   private void writeWavHeader() throws IOException {
-    long totalAudioLen = new FileInputStream(pcmFile).getChannel().size();
+    long totalAudioLen = new FileInputStream(file).getChannel().size();
     try {
       wavFile.seek(0); // to the beginning
       wavFile.write(new WavHeader(pullTransport.source(), totalAudioLen).toBytes());
