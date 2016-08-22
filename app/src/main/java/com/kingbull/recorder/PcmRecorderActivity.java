@@ -8,6 +8,7 @@ import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
+import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
 import android.widget.ImageView;
@@ -29,6 +30,7 @@ public class PcmRecorderActivity extends AppCompatActivity {
   Recorder recorder;
   ImageView recordButton;
   CheckBox skipSilence;
+  Button pauseResumeButton;
 
   @Override protected void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
@@ -58,6 +60,31 @@ public class PcmRecorderActivity extends AppCompatActivity {
         recorder.stopRecording();
         animateVoice(0);
         skipSilence.setEnabled(true);
+      }
+    });
+    pauseResumeButton = (Button) findViewById(R.id.pauseResumeButton);
+    pauseResumeButton.setOnClickListener(new View.OnClickListener() {
+      boolean isPaused = false;
+
+      @Override public void onClick(View view) {
+        if (recorder == null) {
+          Toast.makeText(PcmRecorderActivity.this, "Please start recording first!",
+              Toast.LENGTH_SHORT).show();
+          return;
+        }
+        if (!isPaused) {
+          pauseResumeButton.setText(getString(R.string.resume_recording));
+          recorder.pauseRecording();
+          pauseResumeButton.postDelayed(new Runnable() {
+            @Override public void run() {
+              animateVoice(0);
+            }
+          },100);
+        } else {
+          pauseResumeButton.setText(getString(R.string.pause_recording));
+          recorder.resumeRecording();
+        }
+        isPaused = !isPaused;
       }
     });
   }

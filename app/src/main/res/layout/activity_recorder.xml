@@ -24,6 +24,7 @@
     <!--android:textSize="55sp"-->
     <!--android:textStyle="bold"/>-->
 
+
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -34,6 +35,12 @@
         android:text="click microphone to record"
         android:textAppearance="?android:textAppearanceMedium"
         android:textColor="@android:color/black"/>
+    <Button
+        android:id="@+id/pauseResumeButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:text="@string/pause_recording"/>
 
     <LinearLayout
         android:id="@+id/containerView"

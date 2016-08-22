@@ -16,37 +16,16 @@
 package omrecorder;
 
 import java.io.File;
-import java.io.FileOutputStream;
-import java.io.IOException;
 
 /**
  * {@code Pcm} is recorder for recording audio in wav format.
+ *
  * @author Kailash Dabhi (kailash09dabhi@gmail.com)
  * @date 31-07-2016
  * @skype kailash.09
  */
-final class Pcm implements Recorder {
-  private final PullTransport pullTransport;
-  private final File file;
-
+final class Pcm extends AbstractRecorder {
   public Pcm(PullTransport pullTransport, File file) {
-    this.pullTransport = pullTransport;
-    this.file = file;
-  }
-
-  @Override public void startRecording() {
-    new Thread(new Runnable() {
-      @Override public void run() {
-        try {
-          pullTransport.start(new FileOutputStream(file));
-        } catch (IOException e) {
-          new RuntimeException(e);
-        }
-      }
-    }).start();
-  }
-
-  @Override public void stopRecording() {
-    pullTransport.stop();
+    super(pullTransport, file);
   }
 }

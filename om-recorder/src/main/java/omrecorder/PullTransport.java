@@ -55,11 +55,10 @@ public interface PullTransport {
     void onAudioChunkPulled(AudioChunk audioChunk);
   }
 
-  class AbstractPullTransport implements PullTransport {
+  abstract class AbstractPullTransport implements PullTransport {
     final AudioSource audioRecordSource;
     final OnAudioChunkPulledListener onAudioChunkPulledListener;
     private final UiThread uiThread = new UiThread();
-    boolean pull;
 
     AbstractPullTransport(AudioSource audioRecordSource,
         OnAudioChunkPulledListener onAudioChunkPulledListener) {
@@ -77,7 +76,7 @@ public interface PullTransport {
     }
 
     @Override public void stop() {
-      pull = false;
+      audioRecordSource.isEnableToBePulled(false);
       audioRecordSource.audioRecorder().stop();
     }
 
@@ -88,7 +87,7 @@ public interface PullTransport {
     AudioRecord preparedSourceToBePulled() {
       final AudioRecord audioRecord = audioRecordSource.audioRecorder();
       audioRecord.startRecording();
-      pull = true;
+      audioRecordSource.isEnableToBePulled(true);
       return audioRecord;
     }
 
@@ -135,7 +134,7 @@ public interface PullTransport {
 
     @Override void startPoolingAndWriting(AudioRecord audioRecord, int minimumBufferSize,
         OutputStream outputStream) throws IOException {
-      while (pull) {
+      while (audioRecordSource.isEnableToBePulled()) {
         AudioChunk audioChunk = new AudioChunk.Bytes(new byte[minimumBufferSize]);
         if (AudioRecord.ERROR_INVALID_OPERATION != audioRecord.read(audioChunk.toBytes(), 0,
             minimumBufferSize)) {
@@ -156,7 +155,6 @@ public interface PullTransport {
     private final WriteAction writeAction;
     private long firstSilenceMoment = 0;
     private int noiseRecordedAfterFirstSilenceThreshold = 0;
-    private boolean pull;
 
     public Noise(AudioSource audioRecordSource,
         OnAudioChunkPulledListener onAudioChunkPulledListener, WriteAction writeAction,
@@ -197,8 +195,8 @@ public interface PullTransport {
     @Override public void start(OutputStream outputStream) throws IOException {
       final AudioRecord audioRecord = audioRecordSource.audioRecorder();
       audioRecord.startRecording();
-      pull = true;
-      while (pull) {
+      audioRecordSource.isEnableToBePulled(true);
+      while (audioRecordSource.isEnableToBePulled()) {
         audioChunk.numberOfShortsRead =
             audioRecord.read(audioChunk.shorts, 0, audioChunk.shorts.length);
         if (AudioRecord.ERROR_INVALID_OPERATION != audioChunk.numberOfShortsRead) {

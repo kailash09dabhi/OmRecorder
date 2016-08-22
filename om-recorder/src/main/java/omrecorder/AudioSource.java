@@ -36,6 +36,10 @@ public interface AudioSource {
 
   byte bitsPerSample();
 
+  void isEnableToBePulled(boolean enabledToBePulled);
+
+  boolean isEnableToBePulled();
+
   /**
    * Application should use this default implementation of {@code AudioSource} to configure the
    * Audio Source.
@@ -46,6 +50,7 @@ public interface AudioSource {
     private final int channelPositionMask;
     private final int audioEncoding;
     private final int frequency;
+    private volatile boolean pull;
 
     public Smart(int audioSource, int audioEncoding, int channelPositionMask, int frequency) {
       this.audioSource = audioSource;
@@ -80,6 +85,14 @@ public interface AudioSource {
       } else {
         return 16;
       }
+    }
+
+    @Override public void isEnableToBePulled(boolean enabledToBePulled) {
+      pull = enabledToBePulled;
+    }
+
+    @Override public boolean isEnableToBePulled() {
+      return pull;
     }
   }
 }
