@@ -31,10 +31,16 @@
 <div id="content-wrapper">
     <div class="inner clearfix">
         <section id="main-content">
-            <p><a href="https://bintray.com/kailash09dabhi/maven/om-recorder/_latestVersion"> <img
-                    src="https://api.bintray.com/packages/kailash09dabhi/maven/om-recorder/images/download.svg"
-                    alt="Download"> </a>
-                    <a href="http://www.methodscount.com/?lib=com.kailashdabhi%3Aom-recorder%3A1.0.1"><img src="https://img.shields.io/badge/Methods and size-123 | 18 KB-e91e63.svg"/></a>
+            <p>
+                <a href="https://bintray.com/kailash09dabhi/maven/om-recorder/_latestVersion"> 
+                    <img src="https://api.bintray.com/packages/kailash09dabhi/maven/om-recorder/images/download.svg" alt="Download">
+                </a>
+                <a href="http://www.methodscount.com/?lib=com.kailashdabhi%3Aom-recorder%3A1.0.1">
+                    <img src="https://img.shields.io/badge/Methods and size-123 | 18 KB-e91e63.svg"/>
+                </a>
+                <a href="http://android-arsenal.com/details/1/4028">
+                    <img src="https://img.shields.io/badge/Android%20Arsenal-OmRecorder-orange.svg?style=flat"/>
+                </a>
             </p>
 
             <h1>
@@ -49,6 +55,7 @@
                 <li>Record Pcm audio</li>
                 <li>Record Wav audio</li>
                 <li>Configure audio source to have desired output</li>
+                <li>Record with pause / resume feature</li>
             </ul>
 
             <div class="highlight highlight-source-java"><pre>
@@ -135,13 +142,24 @@
     recorder<span class="pl-k">.</span>stopRecording();</pre>
             </div>
 
+
+   <p><strong>Start &amp; Stop Recording</strong>
+   </p>
+
+    <div class="highlight highlight-source-java">
+        <pre>recorder
+        <span class="pl-k">.</span>pauseRecording();
+        recorder<span class="pl-k">.</span>resumeRecording();</pre>
+    </div>
+            
+            
             <p><strong>OmRecorder</strong></p>
 
             <h2>
                 <a id="download" class="anchor" href="#download" aria-hidden="true"><span
                         aria-hidden="true" class="octicon octicon-link"></span></a>Download</h2>
 
-<pre><code>compile 'com.kailashdabhi:om-recorder:1.0.1'
+<pre><code>compile 'com.kailashdabhi:om-recorder:1.1.0'
 </code></pre>
 
             <h2>
