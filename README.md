@@ -1,4 +1,4 @@
-[ ![Download](https://api.bintray.com/packages/kailash09dabhi/maven/om-recorder/images/download.svg) ](https://bintray.com/kailash09dabhi/maven/om-recorder/_latestVersion) <a href="http://www.methodscount.com/?lib=com.kailashdabhi%3Aom-recorder%3A1.0.1"><img src="https://img.shields.io/badge/Methods and size-123 | 18 KB-e91e63.svg"/></a>
+[ ![Download](https://api.bintray.com/packages/kailash09dabhi/maven/om-recorder/images/download.svg) ](https://bintray.com/kailash09dabhi/maven/om-recorder/_latestVersion) <a href="http://www.methodscount.com/?lib=com.kailashdabhi%3Aom-recorder%3A1.1.0"><img src="https://img.shields.io/badge/Methods and size-126 | 18 KB-e91e63.svg"/></a>[![Android Arsenal](https://img.shields.io/badge/Android%20Arsenal-OmRecorder-orange.svg?style=flat)](http://android-arsenal.com/details/1/4028)
 Om Recorder
 ============
 
@@ -53,6 +53,11 @@ __Start & Stop Recording__
     recorder.startRecording();
     recorder.stopRecording();
 ```
+_Pause & Resume Recording__
+```java
+    recorder.pauseRecording();
+    recorder.resumeRecording();
+```
 
 For documentation and additional information see [the website][1].
 
@@ -60,7 +65,7 @@ __OmRecorder__
 
 Download
 --------
-    compile 'com.kailashdabhi:om-recorder:1.0.1'
+    compile 'com.kailashdabhi:om-recorder:1.1.0'
 License
 -------
 
