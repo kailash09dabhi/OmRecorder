@@ -30,6 +30,10 @@ public interface Recorder {
 
   void stopRecording();
 
+  void pauseRecording();
+
+  void resumeRecording();
+
   /**
    * Interface definition for a callback to be invoked when a silence is measured.
    */
@@ -42,4 +46,5 @@ public interface Recorder {
      */
     void onSilence(long silenceTime);
   }
+
 }

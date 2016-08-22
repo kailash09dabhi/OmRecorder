@@ -1,3 +1,5 @@
 <resources>
     <string name="app_name">Recorder</string>
+    <string name="pause_recording">Pause Recording</string>
+    <string name="resume_recording">Resume Recording</string>
 </resources>
