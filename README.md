@@ -1,4 +1,4 @@
-[ ![Download](https://api.bintray.com/packages/kailash09dabhi/maven/om-recorder/images/download.svg) ](https://bintray.com/kailash09dabhi/maven/om-recorder/_latestVersion) <a href="http://www.methodscount.com/?lib=com.kailashdabhi%3Aom-recorder%3A1.1.0"><img src="https://img.shields.io/badge/Methods and size-126 | 18 KB-e91e63.svg"/></a> [![Android Arsenal] (https://img.shields.io/badge/Android%20Arsenal-OmRecorder-orange.svg?style=flat)](http://android-arsenal.com/details/1/4028)
+[![Build Status](https://travis-ci.org/kailash09dabhi/OmRecorder.svg?branch=master)](https://travis-ci.org/kailash09dabhi/OmRecorder) [ ![Download](https://api.bintray.com/packages/kailash09dabhi/maven/om-recorder/images/download.svg) ](https://bintray.com/kailash09dabhi/maven/om-recorder/_latestVersion) <a href="http://www.methodscount.com/?lib=com.kailashdabhi%3Aom-recorder%3A1.1.0"><img src="https://img.shields.io/badge/Methods and size-126 | 18 KB-e91e63.svg"/></a> [![Android Arsenal] (https://img.shields.io/badge/Android%20Arsenal-OmRecorder-orange.svg?style=flat)](http://android-arsenal.com/details/1/4028) 
 Om Recorder
 ============
 
