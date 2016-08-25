@@ -13,6 +13,9 @@ android {
       proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
     }
   }
+  lintOptions {
+    abortOnError false
+  }
 }
 ext {
   // Where you will see your artifact in Bintray's web interface
