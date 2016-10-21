@@ -65,6 +65,16 @@ For documentation and additional information see [the website][1].
 Download
 --------
     compile 'com.kailashdabhi:om-recorder:1.1.0'
+
+If you would like to help provide the other format to be recorded then please implement the  WriteAction interface to provide mp3, amr,etc and then create pull request.
+
+## Contributing Code
+1. Fork it
+2. Create your feature branch (`git checkout -b my-new-feature`)
+3. Commit your changes (`git commit -am 'Add some feature'`)
+4. Push to the branch (`git push origin my-new-feature`)
+5. Create new Pull Request
+    
 License
 -------
 
