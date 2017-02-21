@@ -1,5 +1,5 @@
-/*
- * Copyright (C) 2016 Kailash Dabhi (Kingbull Technology)
+/**
+ * Copyright 2017 Kailash Dabhi (Kingbull Technology)
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -22,9 +22,8 @@ import java.io.OutputStream;
  * An Implementer class should use this interface to write encoded
  * audio chunk to OutputStream according to chosen audio format.
  *
- * @author Kailash Dabhi (kailash09dabhi@gmail.com)
+ * @author Kailash Dabhi
  * @date 06-07-2016
- * @skype kailash.09
  */
 public interface WriteAction {
 

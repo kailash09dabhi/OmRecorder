@@ -1,5 +1,5 @@
-/*
- * Copyright (C) 2016 Kailash Dabhi (Kingbull Technology)
+/**
+ * Copyright 2017 Kailash Dabhi (Kingbull Technology)
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -20,9 +20,8 @@ import android.media.AudioFormat;
 /**
  * A  Header to be appended to the end of Wav audio file
  *
- * @author Kailash Dabhi (kailash09dabhi@gmail.com)
+ * @author Kailash Dabhi
  * @date 26-07-2016
- * @skype kailash.09
  */
 final class WavHeader {
   private final AudioSource audioRecordSource;

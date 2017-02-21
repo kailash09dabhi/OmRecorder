@@ -1,5 +1,5 @@
-/*
- * Copyright (C) 2016 Kailash Dabhi (Kingbull Technology)
+/**
+ * Copyright 2017 Kailash Dabhi (Kingbull Technology)
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -21,9 +21,8 @@ import android.media.AudioRecord;
 /**
  * An {@code AudioSource} is an interface to configure the Audio Source.
  *
- * @author Kailash Dabhi (kailash09dabhi@gmail.com)
+ * @author Kailash Dabhi
  * @date 06-07-2016
- * @skype kailash.09
  */
 public interface AudioSource {
   AudioRecord audioRecorder();

@@ -1,5 +1,5 @@
-/*
- * Copyright (C) 2016 Kailash Dabhi (Kingbull Technology)
+/**
+ * Copyright 2017 Kailash Dabhi (Kingbull Technology)
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -20,9 +20,8 @@ import java.io.File;
 /**
  * {@code Pcm} is recorder for recording audio in wav format.
  *
- * @author Kailash Dabhi (kailash09dabhi@gmail.com)
+ * @author Kailash Dabhi
  * @date 31-07-2016
- * @skype kailash.09
  */
 final class Pcm extends AbstractRecorder {
   public Pcm(PullTransport pullTransport, File file) {

@@ -1,5 +1,5 @@
-/*
- * Copyright (C) 2016 Kailash Dabhi (Kingbull Technology)
+/**
+ * Copyright 2017 Kailash Dabhi (Kingbull Technology)
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -23,9 +23,8 @@ import java.io.OutputStream;
  * A PullTransport is a object who pulls the data from {@code AudioSource} and transport it to
  * OutputStream
  *
- * @author Kailash Dabhi (kailash09dabhi@gmail.com)
+ * @author Kailash Dabhi
  * @date 06-07-2016
- * @skype kailash.09
  */
 public interface PullTransport {
 

@@ -1,3 +1,18 @@
+/**
+ * Copyright 2017 Kailash Dabhi (Kingbull Technology)
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *      http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
 package com.kingbull.recorder;
 
 import android.media.AudioFormat;
@@ -22,9 +37,9 @@ import omrecorder.Recorder;
 import omrecorder.WriteAction;
 
 /**
- * Created by Kailash Dabhi on 18-07-2016.
- * You can contact us at kailash09dabhi@gmail.com OR on skype(kailash.09)
- * Copyright (c) 2016 Kingbull Technology. All rights reserved.
+ * @author Kailash Dabhi
+ * @date 18-07-2016.
+ * Copyright (c) 2017 Kingbull Technology. All rights reserved.
  */
 public class WavRecorderActivity extends AppCompatActivity {
   Recorder recorder;
@@ -83,7 +98,7 @@ public class WavRecorderActivity extends AppCompatActivity {
             @Override public void run() {
               animateVoice(0);
             }
-          },100);
+          }, 100);
         } else {
           pauseResumeButton.setText(getString(R.string.pause_recording));
           recorder.resumeRecording();
