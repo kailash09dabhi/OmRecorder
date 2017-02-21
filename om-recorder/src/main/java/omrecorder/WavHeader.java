@@ -39,8 +39,8 @@ final class WavHeader {
     int channels = (audioRecordSource.channelPositionMask() == AudioFormat.CHANNEL_IN_MONO ? 1 : 2);
     byte bitsPerSample = audioRecordSource.bitsPerSample();
 
-    return wavFileHeader(totalAudioLength, totalAudioLength + 36, sampleRateInHz, channels,
-        bitsPerSample * sampleRateInHz * channels / 8, bitsPerSample);
+    return wavFileHeader(totalAudioLength - 44, totalAudioLength - 44 + 36, sampleRateInHz,
+        channels, bitsPerSample * sampleRateInHz * channels / 8, bitsPerSample);
   }
 
   private byte[] wavFileHeader(long totalAudioLen, long totalDataLen, long longSampleRate,
