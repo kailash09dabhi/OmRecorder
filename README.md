@@ -11,6 +11,13 @@ A Simple Pcm / Wav audio recorder with nice api.
  * Configure audio source to have desired output
  * Record with pause / resume feature
 
+
+Add these permissions into your `AndroidManifest.xml` and [request for them in Android 6.0+](https://developer.android.com/training/permissions/requesting.html)
+```xml
+<uses-permission android:name="android.permission.RECORD_AUDIO"/>
+<uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
+<uses-permission android:name="android.permission.WAKE_LOCK" />
+```
 ```java
 
   recorder = OmRecorder.wav(
@@ -64,7 +71,7 @@ For documentation and additional information see [the website][1].
 
 Download
 --------
-    compile 'com.kailashdabhi:om-recorder:1.1.0'
+    compile 'com.kailashdabhi:om-recorder:1.1.1'
 
 If you would like to help provide the other format to be recorded then please implement the  WriteAction interface to provide mp3, amr,etc and then create pull request.
 
@@ -78,7 +85,7 @@ If you would like to help provide the other format to be recorded then please im
 License
 -------
 
-    Copyright 2016 Kailash Dabhi (Kingbull Technology)
+    Copyright 2017 Kailash Dabhi (Kingbull Technology)
 
     Licensed under the Apache License, Version 2.0 (the "License");
     you may not use this file except in compliance with the License.
