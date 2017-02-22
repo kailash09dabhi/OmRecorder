@@ -11,12 +11,10 @@ A Simple Pcm / Wav audio recorder with nice api.
  * Configure audio source to have desired output
  * Record with pause / resume feature
 
-
 Add these permissions into your `AndroidManifest.xml` and [request for them in Android 6.0+](https://developer.android.com/training/permissions/requesting.html)
 ```xml
 <uses-permission android:name="android.permission.RECORD_AUDIO"/>
 <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
-<uses-permission android:name="android.permission.WAKE_LOCK" />
 ```
 ```java
 
