@@ -74,6 +74,23 @@ For documentation and additional information see [the website][1].
 Download
 --------
     compile 'com.kailashdabhi:om-recorder:1.1.1'
+    
+
+Donations
+---------
+
+This project needs you! If you would like to support this project's further development, the creator of this project or the continuous maintenance of this project, feel free to donate. Your donation is highly appreciated (and I love food, coffee and beer). Thank you!
+
+**PayPal**
+
+* **[Donate $5]**: Thank's for creating this project, here's a coffee (or some beer) for you!
+* **[Donate $10]**: Wow, I am stunned. Let me take you to the movies!
+* **[Donate $15]**: I really appreciate your work, let's grab some lunch!
+* **[Donate $25]**: That's some awesome stuff you did right there, dinner is on me!
+* **[Donate $50]**: I really really want to support this project, great job!
+* **[Donate $100]**: You are the man! This project saved me hours (if not days) of struggle and hard work, simply awesome!
+* **[Donate $2799]**: Go buddy, buy Macbook Pro for yourself!
+Of course, you can also choose what you want to donate, all donations are awesome!
 
 If you would like to help provide the other format to be recorded then please implement the  WriteAction interface to provide mp3, amr,etc and then create pull request.
 
@@ -103,6 +120,10 @@ License
 
 
  [1]: https://kailash09dabhi.github.io/OmRecorder/
-
-
-
+ [Donate $5]: 		https://www.paypal.me/MrKailashDabhi/5
+ [Donate $10]:  		https://www.paypal.me/MrKailashDabhi/10
+ [Donate $15]:  		https://www.paypal.me/MrKailashDabhi/15
+ [Donate $25]:  		https://www.paypal.me/MrKailashDabhi/25
+ [Donate $50]: 		https://www.paypal.me/MrKailashDabhi/50
+ [Donate $100]: 		https://www.paypal.me/MrKailashDabhi/100
+ [Donate $2799]: 	https://www.paypal.me/MrKailashDabhi/2799
