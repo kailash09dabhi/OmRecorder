@@ -92,9 +92,10 @@ This project needs you! If you would like to support this project's further deve
 * **[Donate $2799]**: Go buddy, buy Macbook Pro for yourself!
 Of course, you can also choose what you want to donate, all donations are awesome!
 
+## Contributing Code
+
 If you would like to help provide the other format to be recorded then please implement the  WriteAction interface to provide mp3, amr,etc and then create pull request.
 
-## Contributing Code
 1. Fork it
 2. Create your feature branch (`git checkout -b my-new-feature`)
 3. Commit your changes (`git commit -am 'Add some feature'`)
