@@ -73,7 +73,7 @@ For documentation and additional information see [the website][1].
 
 Download
 --------
-    compile 'com.kailashdabhi:om-recorder:1.1.1'
+    compile 'com.kailashdabhi:om-recorder:1.1.2'
     
 
 Donations
