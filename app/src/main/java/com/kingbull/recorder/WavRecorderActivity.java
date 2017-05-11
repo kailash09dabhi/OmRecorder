@@ -5,7 +5,7 @@
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
  *
- *      http://www.apache.org/licenses/LICENSE-2.0
+ * http://www.apache.org/licenses/LICENSE-2.0
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
@@ -29,6 +29,7 @@ import android.widget.CompoundButton;
 import android.widget.ImageView;
 import android.widget.Toast;
 import java.io.File;
+import java.io.IOException;
 import omrecorder.AudioChunk;
 import omrecorder.AudioSource;
 import omrecorder.OmRecorder;
@@ -62,7 +63,6 @@ public class WavRecorderActivity extends AppCompatActivity {
         }
       }
     });
-
     recordButton = (ImageView) findViewById(R.id.recordButton);
     recordButton.setOnClickListener(new View.OnClickListener() {
       @Override public void onClick(View view) {
@@ -72,7 +72,11 @@ public class WavRecorderActivity extends AppCompatActivity {
     });
     findViewById(R.id.stopButton).setOnClickListener(new View.OnClickListener() {
       @Override public void onClick(View view) {
-        recorder.stopRecording();
+        try {
+          recorder.stopRecording();
+        } catch (IOException e) {
+          e.printStackTrace();
+        }
         skipSilence.setEnabled(true);
         recordButton.post(new Runnable() {
           @Override public void run() {
@@ -108,8 +112,16 @@ public class WavRecorderActivity extends AppCompatActivity {
     });
   }
 
-  private void setupNoiseRecorder() {
+  private void setupRecorder() {
+    recorder = OmRecorder.wav(
+        new PullTransport.Default(mic(), new PullTransport.OnAudioChunkPulledListener() {
+          @Override public void onAudioChunkPulled(AudioChunk audioChunk) {
+            animateVoice((float) (audioChunk.maxAmplitude() / 200.0));
+          }
+        }), file());
+  }
 
+  private void setupNoiseRecorder() {
     recorder = OmRecorder.wav(
         new PullTransport.Noise(mic(), new PullTransport.OnAudioChunkPulledListener() {
           @Override public void onAudioChunkPulled(AudioChunk audioChunk) {
@@ -122,15 +134,6 @@ public class WavRecorderActivity extends AppCompatActivity {
                 Toast.LENGTH_SHORT).show();
           }
         }, 200), file());
-  }
-
-  private void setupRecorder() {
-    recorder = OmRecorder.wav(
-        new PullTransport.Default(mic(), new PullTransport.OnAudioChunkPulledListener() {
-          @Override public void onAudioChunkPulled(AudioChunk audioChunk) {
-            animateVoice((float) (audioChunk.maxAmplitude() / 200.0));
-          }
-        }), file());
   }
 
   private void animateVoice(final float maxPeak) {

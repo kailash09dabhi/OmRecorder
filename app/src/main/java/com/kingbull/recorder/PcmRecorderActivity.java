@@ -29,6 +29,7 @@ import android.widget.CompoundButton;
 import android.widget.ImageView;
 import android.widget.Toast;
 import java.io.File;
+import java.io.IOException;
 import omrecorder.AudioChunk;
 import omrecorder.AudioSource;
 import omrecorder.OmRecorder;
@@ -72,7 +73,11 @@ public class PcmRecorderActivity extends AppCompatActivity {
     });
     findViewById(R.id.stopButton).setOnClickListener(new View.OnClickListener() {
       @Override public void onClick(View view) {
-        recorder.stopRecording();
+        try {
+          recorder.stopRecording();
+        } catch (IOException e) {
+          e.printStackTrace();
+        }
         animateVoice(0);
         skipSilence.setEnabled(true);
       }
