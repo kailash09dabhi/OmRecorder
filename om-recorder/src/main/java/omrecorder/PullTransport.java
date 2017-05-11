@@ -134,7 +134,8 @@ public interface PullTransport {
       while (audioRecordSource.isEnableToBePulled()) {
         AudioChunk audioChunk = new AudioChunk.Bytes(new byte[minimumBufferSize]);
         audioChunk.readCount(audioRecord.read(audioChunk.toBytes(), 0, minimumBufferSize));
-        if (AudioRecord.ERROR_INVALID_OPERATION != audioChunk.readCount()) {
+        if (AudioRecord.ERROR_INVALID_OPERATION != audioChunk.readCount()
+            && AudioRecord.ERROR_BAD_VALUE != audioChunk.readCount()) {
           if (onAudioChunkPulledListener != null) {
             postPullEvent(audioChunk);
           }
@@ -195,7 +196,8 @@ public interface PullTransport {
       while (audioRecordSource.isEnableToBePulled()) {
         short[] shorts = audioChunk.toShorts();
         audioChunk.readCount(audioRecord.read(shorts, 0, shorts.length));
-        if (AudioRecord.ERROR_INVALID_OPERATION != audioChunk.readCount()) {
+        if (AudioRecord.ERROR_INVALID_OPERATION != audioChunk.readCount()
+            && AudioRecord.ERROR_BAD_VALUE != audioChunk.readCount()) {
           if (onAudioChunkPulledListener != null) {
             postPullEvent(audioChunk);
           }
