@@ -5,7 +5,7 @@
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
  *
- *      http://www.apache.org/licenses/LICENSE-2.0
+ * http://www.apache.org/licenses/LICENSE-2.0
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
@@ -27,7 +27,6 @@ import java.io.OutputStream;
  * @date 06-07-2016
  */
 public interface PullTransport {
-
   /**
    * It starts to pull the {@code  AudioSource}  and transport it to
    * OutputStream
@@ -74,6 +73,13 @@ public interface PullTransport {
         OutputStream outputStream) throws IOException {
     }
 
+    AudioRecord preparedSourceToBePulled() {
+      final AudioRecord audioRecord = audioRecordSource.audioRecorder();
+      audioRecord.startRecording();
+      audioRecordSource.isEnableToBePulled(true);
+      return audioRecord;
+    }
+
     @Override public void stop() {
       audioRecordSource.isEnableToBePulled(false);
       audioRecordSource.audioRecorder().stop();
@@ -81,13 +87,6 @@ public interface PullTransport {
 
     public AudioSource source() {
       return audioRecordSource;
-    }
-
-    AudioRecord preparedSourceToBePulled() {
-      final AudioRecord audioRecord = audioRecordSource.audioRecorder();
-      audioRecord.startRecording();
-      audioRecordSource.isEnableToBePulled(true);
-      return audioRecord;
     }
 
     void postSilenceEvent(final Recorder.OnSilenceListener onSilenceListener,
@@ -109,17 +108,16 @@ public interface PullTransport {
   }
 
   final class Default extends AbstractPullTransport {
-
     private final WriteAction writeAction;
+
+    public Default(AudioSource audioRecordSource, WriteAction writeAction) {
+      this(audioRecordSource, null, writeAction);
+    }
 
     public Default(AudioSource audioRecordSource,
         OnAudioChunkPulledListener onAudioChunkPulledListener, WriteAction writeAction) {
       super(audioRecordSource, onAudioChunkPulledListener);
       this.writeAction = writeAction;
-    }
-
-    public Default(AudioSource audioRecordSource, WriteAction writeAction) {
-      this(audioRecordSource, null, writeAction);
     }
 
     public Default(AudioSource audioRecordSource,
@@ -147,13 +145,18 @@ public interface PullTransport {
   }
 
   final class Noise extends AbstractPullTransport {
-
-    private final AudioChunk.Shorts audioChunk;
     private final long silenceTimeThreshold;
     private final Recorder.OnSilenceListener silenceListener;
     private final WriteAction writeAction;
     private long firstSilenceMoment = 0;
     private int noiseRecordedAfterFirstSilenceThreshold = 0;
+
+    public Noise(AudioSource audioRecordSource,
+        OnAudioChunkPulledListener onAudioChunkPulledListener,
+        Recorder.OnSilenceListener silenceListener, long silenceTimeThreshold) {
+      this(audioRecordSource, onAudioChunkPulledListener, new WriteAction.Default(),
+          silenceListener, silenceTimeThreshold);
+    }
 
     public Noise(AudioSource audioRecordSource,
         OnAudioChunkPulledListener onAudioChunkPulledListener, WriteAction writeAction,
@@ -162,14 +165,6 @@ public interface PullTransport {
       this.writeAction = writeAction;
       this.silenceListener = silenceListener;
       this.silenceTimeThreshold = silenceTimeThreshold;
-      audioChunk = new AudioChunk.Shorts(new short[audioRecordSource.minimumBufferSize()]);
-    }
-
-    public Noise(AudioSource audioRecordSource,
-        OnAudioChunkPulledListener onAudioChunkPulledListener,
-        Recorder.OnSilenceListener silenceListener, long silenceTimeThreshold) {
-      this(audioRecordSource, onAudioChunkPulledListener, new WriteAction.Default(),
-          silenceListener, silenceTimeThreshold);
     }
 
     public Noise(AudioSource audioRecordSource, WriteAction writeAction,
@@ -195,6 +190,8 @@ public interface PullTransport {
       final AudioRecord audioRecord = audioRecordSource.audioRecorder();
       audioRecord.startRecording();
       audioRecordSource.isEnableToBePulled(true);
+      final AudioChunk.Shorts audioChunk =
+          new AudioChunk.Shorts(new short[audioRecordSource.minimumBufferSize()]);
       while (audioRecordSource.isEnableToBePulled()) {
         audioChunk.numberOfShortsRead =
             audioRecord.read(audioChunk.shorts, 0, audioChunk.shorts.length);
@@ -208,7 +205,6 @@ public interface PullTransport {
             noiseRecordedAfterFirstSilenceThreshold++;
           } else {
             if (firstSilenceMoment == 0) firstSilenceMoment = System.currentTimeMillis();
-
             final long silenceTime = System.currentTimeMillis() - firstSilenceMoment;
             if (firstSilenceMoment != 0 && silenceTime > this.silenceTimeThreshold) {
               if (silenceTime > 1000) {
