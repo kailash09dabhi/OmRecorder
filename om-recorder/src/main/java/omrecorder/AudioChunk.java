@@ -5,7 +5,7 @@
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
  *
- *      http://www.apache.org/licenses/LICENSE-2.0
+ * http://www.apache.org/licenses/LICENSE-2.0
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
@@ -31,12 +31,14 @@ public interface AudioChunk {
 
   short[] toShorts();
 
-  final class Bytes implements AudioChunk {
+  int readCount();
 
+  void readCount(int numberOfUnitThatWereRead);
+
+  final class Bytes implements AudioChunk {
     private static final double REFERENCE = 0.6;
     final byte[] bytes;
-    //number denotes the bytes read in @code buffer
-    int numberOfBytesRead;
+    private int numberOfBytesRead;
 
     Bytes(byte[] bytes) {
       this.bytes = bytes;
@@ -64,15 +66,22 @@ public interface AudioChunk {
       ByteBuffer.wrap(bytes).order(ByteOrder.LITTLE_ENDIAN).asShortBuffer().get(shorts);
       return shorts;
     }
+
+    @Override public int readCount() {
+      return numberOfBytesRead;
+    }
+
+    @Override public void readCount(int numberOfUnitThatWereRead) {
+      this.numberOfBytesRead = numberOfUnitThatWereRead;
+    }
   }
 
   final class Shorts implements AudioChunk {
     //number denotes the bytes read in @code buffer
-
     private static final short SILENCE_THRESHOLD = 2700;
     private static final double REFERENCE = 0.6;
     final short[] shorts;
-    int numberOfShortsRead;
+    private int numberOfShortsRead;
 
     Shorts(short[] bytes) {
       this.shorts = bytes;
@@ -116,6 +125,14 @@ public interface AudioChunk {
 
     @Override public short[] toShorts() {
       return shorts;
+    }
+
+    @Override public int readCount() {
+      return numberOfShortsRead;
+    }
+
+    @Override public void readCount(int numberOfUnitThatWereRead) {
+      this.numberOfShortsRead = numberOfUnitThatWereRead;
     }
   }
 }
