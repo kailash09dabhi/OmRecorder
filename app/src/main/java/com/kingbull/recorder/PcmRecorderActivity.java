@@ -105,7 +105,7 @@ public class PcmRecorderActivity extends AppCompatActivity {
   }
 
   private void setupRecorder() {
-    recorder = OmRecorder.wav(
+    recorder = OmRecorder.pcm(
         new PullTransport.Default(mic(), new PullTransport.OnAudioChunkPulledListener() {
           @Override public void onAudioChunkPulled(AudioChunk audioChunk) {
             animateVoice((float) (audioChunk.maxAmplitude() / 200.0));
