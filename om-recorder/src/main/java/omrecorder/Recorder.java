@@ -5,7 +5,7 @@
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
  *
- *      http://www.apache.org/licenses/LICENSE-2.0
+ * http://www.apache.org/licenses/LICENSE-2.0
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
@@ -22,9 +22,7 @@ package omrecorder;
  * @author Kailash Dabhi
  * @date 06-07-2016
  */
-
 public interface Recorder {
-
   void startRecording();
 
   void stopRecording();
@@ -37,7 +35,6 @@ public interface Recorder {
    * Interface definition for a callback to be invoked when a silence is measured.
    */
   interface OnSilenceListener {
-
     /**
      * Called when a silence measured
      *
@@ -45,5 +42,4 @@ public interface Recorder {
      */
     void onSilence(long silenceTime);
   }
-
 }

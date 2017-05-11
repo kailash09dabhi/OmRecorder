@@ -5,7 +5,7 @@
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
  *
- *      http://www.apache.org/licenses/LICENSE-2.0
+ * http://www.apache.org/licenses/LICENSE-2.0
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
@@ -37,16 +37,13 @@ final class WavHeader {
     long sampleRateInHz = audioRecordSource.frequency();
     int channels = (audioRecordSource.channelPositionMask() == AudioFormat.CHANNEL_IN_MONO ? 1 : 2);
     byte bitsPerSample = audioRecordSource.bitsPerSample();
-
     return wavFileHeader(totalAudioLength - 44, totalAudioLength - 44 + 36, sampleRateInHz,
         channels, bitsPerSample * sampleRateInHz * channels / 8, bitsPerSample);
   }
 
   private byte[] wavFileHeader(long totalAudioLen, long totalDataLen, long longSampleRate,
       int channels, long byteRate, byte bitsPerSample) {
-
     byte[] header = new byte[44];
-
     header[0] = 'R'; // RIFF/WAVE header
     header[1] = 'I';
     header[2] = 'F';
