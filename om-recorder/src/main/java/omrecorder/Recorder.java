@@ -15,6 +15,8 @@
  */
 package omrecorder;
 
+import java.io.IOException;
+
 /**
  * A Recorder who can start and stop recording with startRecording() and stopRecording() method
  * respectively.
@@ -25,7 +27,7 @@ package omrecorder;
 public interface Recorder {
   void startRecording();
 
-  void stopRecording();
+  void stopRecording() throws IOException;
 
   void pauseRecording();
 

@@ -20,6 +20,8 @@ import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.OutputStream;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 
 /**
  * @author Kailash Dabhi
@@ -29,12 +31,28 @@ import java.io.OutputStream;
 abstract class AbstractRecorder implements Recorder {
   protected final PullTransport pullTransport;
   protected final File file;
-  private final OutputStream outputStream;
+  private final ExecutorService executorService = Executors.newSingleThreadExecutor();
+  private OutputStream outputStream;
+  private final Runnable recordingTask = new Runnable() {
+    @Override public void run() {
+      try {
+        pullTransport.start(outputStream);
+      } catch (IOException e) {
+        throw new RuntimeException(e);
+      } catch (IllegalStateException e) {
+        throw new RuntimeException("AudioRecord state has uninitialized state", e);
+      }
+    }
+  };
 
   protected AbstractRecorder(PullTransport pullTransport, File file) {
     this.pullTransport = pullTransport;
     this.file = file;
-    this.outputStream = outputStream(file);
+  }
+
+  @Override public void startRecording() {
+    outputStream = outputStream(file);
+    executorService.submit(recordingTask);
   }
 
   private OutputStream outputStream(File file) {
@@ -49,22 +67,10 @@ abstract class AbstractRecorder implements Recorder {
     return outputStream;
   }
 
-  @Override public void startRecording() {
-    new Thread(new Runnable() {
-      @Override public void run() {
-        try {
-          pullTransport.start(outputStream);
-        } catch (IOException e) {
-          throw new RuntimeException(e);
-        } catch (IllegalStateException e) {
-          throw new RuntimeException("AudioRecord state has uninitialized state", e);
-        }
-      }
-    }).start();
-  }
-
-  @Override public void stopRecording() {
+  @Override public void stopRecording() throws IOException {
     pullTransport.stop();
+    outputStream.flush();
+    outputStream.close();
   }
 
   @Override public void pauseRecording() {
@@ -73,6 +79,6 @@ abstract class AbstractRecorder implements Recorder {
 
   @Override public void resumeRecording() {
     pullTransport.source().isEnableToBePulled(true);
-    startRecording();
+    executorService.submit(recordingTask);
   }
 }

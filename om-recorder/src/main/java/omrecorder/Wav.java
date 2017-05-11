@@ -32,8 +32,8 @@ final class Wav extends AbstractRecorder {
   }
 
   @Override public void stopRecording() {
-    super.stopRecording();
     try {
+      super.stopRecording();
       writeWavHeader();
     } catch (IOException e) {
       throw new RuntimeException("Error in applying wav header", e);
