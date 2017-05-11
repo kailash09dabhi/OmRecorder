@@ -1,4 +1,6 @@
-[![Build Status](https://travis-ci.org/kailash09dabhi/OmRecorder.svg?branch=master)](https://travis-ci.org/kailash09dabhi/OmRecorder) [ ![Download](https://api.bintray.com/packages/kailash09dabhi/maven/om-recorder/images/download.svg) ](https://bintray.com/kailash09dabhi/maven/om-recorder/_latestVersion) <a href="http://www.methodscount.com/?lib=com.kailashdabhi%3Aom-recorder%3A1.1.0"><img src="https://img.shields.io/badge/Methods and size-126 | 18 KB-e91e63.svg"/></a> [![Android Arsenal] (https://img.shields.io/badge/Android%20Arsenal-OmRecorder-orange.svg?style=flat)](http://android-arsenal.com/details/1/4028) 
+[![Build Status](https://travis-ci.org/kailash09dabhi/OmRecorder.svg?branch=master)](https://travis-ci.org/kailash09dabhi/OmRecorder) [ ![Download](https://api.bintray.com/packages/kailash09dabhi/maven/om-recorder/images/download.svg) ](https://bintray.com/kailash09dabhi/maven/om-recorder/_latestVersion) <a href="http://www.methodscount.com/?lib=com.kailashdabhi%3Aom-recorder%3A1.1.0"><img src="https://img.shields.io/badge/Methods and size-126 | 18 KB-e91e63.svg"/></a> 
+[![Android Arsenal](https://img.shields.io/badge/Android%20Arsenal-OmRecorder-orange.svg?style=flat)](https://android-arsenal.com/details/1/4028)
+
 Om Recorder
 ============
 
@@ -10,6 +12,8 @@ A Simple Pcm / Wav audio recorder with nice api.
  * Record Wav audio
  * Configure audio source to have desired output
  * Record with pause / resume feature
+ 
+<a href='https://play.google.com/store/apps/details?id=com.kingbull.omrecorder&pcampaignid=MKT-Other-global-all-co-prtnr-py-PartBadge-Mar2515-1'><img alt='Get it on Google Play'  height="80" src='https://play.google.com/intl/en_us/badges/images/generic/en_badge_web_generic.png'/></a>
 
 Add these permissions into your `AndroidManifest.xml` and [request for them in Android 6.0+](https://developer.android.com/training/permissions/requesting.html)
 ```xml
@@ -70,10 +74,28 @@ For documentation and additional information see [the website][1].
 Download
 --------
     compile 'com.kailashdabhi:om-recorder:1.1.1'
+    
+
+Donations
+---------
+
+This project needs you! If you would like to support this project's further development, the creator of this project or the continuous maintenance of this project, feel free to donate. Your donation is highly appreciated (and I love food, coffee and beer). Thank you!
+
+**PayPal**
+
+* **[Donate $5]**: Thank's for creating this project, here's a coffee (or some beer) for you!
+* **[Donate $10]**: Wow, I am stunned. Let me take you to the movies!
+* **[Donate $15]**: I really appreciate your work, let's grab some lunch!
+* **[Donate $25]**: That's some awesome stuff you did right there, dinner is on me!
+* **[Donate $50]**: I really really want to support this project, great job!
+* **[Donate $100]**: You are the man! This project saved me hours (if not days) of struggle and hard work, simply awesome!
+* **[Donate $2799]**: Go buddy, buy Macbook Pro for yourself!
+Of course, you can also choose what you want to donate, all donations are awesome!
+
+## Contributing Code
 
 If you would like to help provide the other format to be recorded then please implement the  WriteAction interface to provide mp3, amr,etc and then create pull request.
 
-## Contributing Code
 1. Fork it
 2. Create your feature branch (`git checkout -b my-new-feature`)
 3. Commit your changes (`git commit -am 'Add some feature'`)
@@ -99,6 +121,10 @@ License
 
 
  [1]: https://kailash09dabhi.github.io/OmRecorder/
-
-
-
+ [Donate $5]: 		https://www.paypal.me/MrKailashDabhi/5
+ [Donate $10]:  		https://www.paypal.me/MrKailashDabhi/10
+ [Donate $15]:  		https://www.paypal.me/MrKailashDabhi/15
+ [Donate $25]:  		https://www.paypal.me/MrKailashDabhi/25
+ [Donate $50]: 		https://www.paypal.me/MrKailashDabhi/50
+ [Donate $100]: 		https://www.paypal.me/MrKailashDabhi/100
+ [Donate $2799]: 	https://www.paypal.me/MrKailashDabhi/2799
