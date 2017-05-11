@@ -131,8 +131,8 @@ public interface PullTransport {
 
     @Override void startPoolingAndWriting(AudioRecord audioRecord, int minimumBufferSize,
         OutputStream outputStream) throws IOException {
+      AudioChunk audioChunk = new AudioChunk.Bytes(new byte[minimumBufferSize]);
       while (audioRecordSource.isEnableToBePulled()) {
-        AudioChunk audioChunk = new AudioChunk.Bytes(new byte[minimumBufferSize]);
         audioChunk.readCount(audioRecord.read(audioChunk.toBytes(), 0, minimumBufferSize));
         if (AudioRecord.ERROR_INVALID_OPERATION != audioChunk.readCount()
             && AudioRecord.ERROR_BAD_VALUE != audioChunk.readCount()) {
