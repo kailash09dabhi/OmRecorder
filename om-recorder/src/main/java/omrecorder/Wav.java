@@ -27,11 +27,24 @@ import java.io.RandomAccessFile;
  * @date 31-07-2016
  */
 final class Wav extends AbstractRecorder {
-  private final RandomAccessFile wavFile;
-
   public Wav(PullTransport pullTransport, File file) {
     super(pullTransport, file);
-    this.wavFile = randomAccessFile(file);
+  }
+
+  @Override public void stopRecording() {
+    super.stopRecording();
+    try {
+      writeWavHeader();
+    } catch (IOException e) {
+      throw new RuntimeException("Error in applying wav header", e);
+    }
+  }
+
+  private void writeWavHeader() throws IOException {
+    final RandomAccessFile wavFile = randomAccessFile(file);
+    wavFile.seek(0); // to the beginning
+    wavFile.write(new WavHeader(pullTransport.source(), file.length()).toBytes());
+    wavFile.close();
   }
 
   private RandomAccessFile randomAccessFile(File file) {
@@ -42,19 +55,5 @@ final class Wav extends AbstractRecorder {
       throw new RuntimeException(e);
     }
     return randomAccessFile;
-  }
-
-  @Override public void stopRecording() {
-    super.stopRecording();
-    try {
-      writeWavHeader();
-    } catch (IOException e) {
-    }
-  }
-
-  private void writeWavHeader() throws IOException {
-    wavFile.seek(0); // to the beginning
-    wavFile.write(new WavHeader(pullTransport.source(), file.length()).toBytes());
-    wavFile.close();
   }
 }
