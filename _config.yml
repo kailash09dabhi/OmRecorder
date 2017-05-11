@@ -1,0 +1,8 @@
+title: Omrecorder
+description: A Simple Pcm / Wav audio recorder with nice api.
+google_analytics: 
+show_downloads: true
+theme: jekyll-theme-cayman
+
+gems:
+  - jekyll-mentions
