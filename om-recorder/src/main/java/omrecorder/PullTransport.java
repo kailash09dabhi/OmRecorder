@@ -187,12 +187,9 @@ public interface PullTransport {
       this(audioRecordSource, null, new WriteAction.Default(), null, 200);
     }
 
-    @Override public void start(OutputStream outputStream) throws IOException {
-      final AudioRecord audioRecord = audioRecordSource.audioRecorder();
-      audioRecord.startRecording();
-      audioRecordSource.isEnableToBePulled(true);
-      final AudioChunk.Shorts audioChunk =
-          new AudioChunk.Shorts(new short[audioRecordSource.minimumBufferSize()]);
+    @Override void startPoolingAndWriting(AudioRecord audioRecord, int minimumBufferSize,
+        OutputStream outputStream) throws IOException {
+      final AudioChunk.Shorts audioChunk = new AudioChunk.Shorts(new short[minimumBufferSize]);
       while (audioRecordSource.isEnableToBePulled()) {
         short[] shorts = audioChunk.toShorts();
         audioChunk.readCount(audioRecord.read(shorts, 0, shorts.length));
