@@ -37,7 +37,7 @@ public interface AudioChunk {
 
   final class Bytes implements AudioChunk {
     private static final double REFERENCE = 0.6;
-    final byte[] bytes;
+    private final byte[] bytes;
     private int numberOfBytesRead;
 
     Bytes(byte[] bytes) {
@@ -80,7 +80,7 @@ public interface AudioChunk {
     //number denotes the bytes read in @code buffer
     private static final short SILENCE_THRESHOLD = 2700;
     private static final double REFERENCE = 0.6;
-    final short[] shorts;
+    private final short[] shorts;
     private int numberOfShortsRead;
 
     Shorts(short[] bytes) {
