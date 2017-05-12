@@ -37,7 +37,7 @@ ext {
   libraryDescription =
       'A fluent api wrapper of AudioRecord object to record Pcm & Wav file. There is a listner apis' +
           ' to have audio pulling and also silence detection.'
-  libraryVersion = '1.1.2'
+  libraryVersion = '1.1.3'
 
   developerId = 'kailash09dabhi'
   developerName = 'Kailash Dabhi'
