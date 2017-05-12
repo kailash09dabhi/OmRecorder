@@ -2,7 +2,7 @@
 Om Recorder
 ============
 
-![Logo](website/static/om.png)
+![Logo](images/om.png)
 
 A Simple Pcm / Wav audio recorder with nice api. 
 
@@ -54,13 +54,12 @@ __Start & Stop Recording__
     recorder.stopRecording();
 ```
 
-For documentation and additional information see [the website][3].
-
 __OmRecorder__
 
 Download
 --------
-    compile 'com.kailashdabhi:om-recorder:1.0.0'
+    compile 'com.kailashdabhi:om-recorder:1.1.2'
+    
 License
 -------
 
