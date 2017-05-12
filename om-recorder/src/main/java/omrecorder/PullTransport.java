@@ -83,6 +83,7 @@ public interface PullTransport {
     @Override public void stop() {
       audioRecordSource.isEnableToBePulled(false);
       audioRecordSource.audioRecorder().stop();
+      audioRecordSource.audioRecorder().release();
     }
 
     public AudioSource source() {
