@@ -1,4 +1,4 @@
-[![Build Status](https://travis-ci.org/kailash09dabhi/OmRecorder.svg?branch=master)](https://travis-ci.org/kailash09dabhi/OmRecorder) [ ![Download](https://api.bintray.com/packages/kailash09dabhi/maven/om-recorder/images/download.svg) ](https://bintray.com/kailash09dabhi/maven/om-recorder/_latestVersion) <a href="http://www.methodscount.com/?lib=com.kailashdabhi%3Aom-recorder%3A1.1.0"><img src="https://img.shields.io/badge/Methods and size-126 | 18 KB-e91e63.svg"/></a> 
+[![Build Status](https://travis-ci.org/kailash09dabhi/OmRecorder.svg?branch=master)](https://travis-ci.org/kailash09dabhi/OmRecorder) [ ![Download](https://api.bintray.com/packages/kailash09dabhi/maven/om-recorder/images/download.svg) ](https://bintray.com/kailash09dabhi/maven/om-recorder/_latestVersion) <a href="http://www.methodscount.com/?lib=com.kailashdabhi%3Aom-recorder%3A1.1.3"><img src="https://img.shields.io/badge/Methods count-132-e91e63.svg"/></a> 
 [![Android Arsenal](https://img.shields.io/badge/Android%20Arsenal-OmRecorder-orange.svg?style=flat)](https://android-arsenal.com/details/1/4028)
 
 Om Recorder
@@ -73,7 +73,7 @@ For documentation and additional information see [the website][1].
 
 Download
 --------
-    compile 'com.kailashdabhi:om-recorder:1.1.2'
+    compile 'com.kailashdabhi:om-recorder:1.1.3'
     
 
 Donations
@@ -83,13 +83,13 @@ This project needs you! If you would like to support this project's further deve
 
 **PayPal**
 
-* **[Donate $5]**: Thank's for creating this project, here's a coffee (or some beer) for you!
+* **[Donate $7]**: Thank's for creating this project, here's a coffee (or some beer) for you!
 * **[Donate $10]**: Wow, I am stunned. Let me take you to the movies!
-* **[Donate $15]**: I really appreciate your work, let's grab some lunch!
+* **[Donate $16]**: I really appreciate your work, let's grab some lunch!
 * **[Donate $25]**: That's some awesome stuff you did right there, dinner is on me!
-* **[Donate $50]**: I really really want to support this project, great job!
-* **[Donate $100]**: You are the man! This project saved me hours (if not days) of struggle and hard work, simply awesome!
-* **[Donate $2799]**: Go buddy, buy Macbook Pro for yourself!
+* **[Donate $52]**: I really really want to support this project, great job!
+* **[Donate $97]**: You are the man! This project saved me hours (if not days) of struggle and hard work, simply awesome!
+* **[Donate $2500]**: Go buddy, buy Macbook Pro for yourself!
 Of course, you can also choose what you want to donate, all donations are awesome!
 
 ## Contributing Code
@@ -121,10 +121,10 @@ License
 
 
  [1]: https://kailash09dabhi.github.io/OmRecorder/
- [Donate $5]: 		https://www.paypal.me/MrKailashDabhi/5
+ [Donate $7]: 		https://www.paypal.me/MrKailashDabhi/7
  [Donate $10]:  		https://www.paypal.me/MrKailashDabhi/10
- [Donate $15]:  		https://www.paypal.me/MrKailashDabhi/15
+ [Donate $16]:  		https://www.paypal.me/MrKailashDabhi/16
  [Donate $25]:  		https://www.paypal.me/MrKailashDabhi/25
- [Donate $50]: 		https://www.paypal.me/MrKailashDabhi/50
- [Donate $100]: 		https://www.paypal.me/MrKailashDabhi/100
- [Donate $2799]: 	https://www.paypal.me/MrKailashDabhi/2799
+ [Donate $52]: 		https://www.paypal.me/MrKailashDabhi/52
+ [Donate $97]: 		https://www.paypal.me/MrKailashDabhi/97
+ [Donate $2500]: 	https://www.paypal.me/MrKailashDabhi/2500
