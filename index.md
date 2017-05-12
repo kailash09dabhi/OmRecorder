@@ -11,7 +11,15 @@ A Simple Pcm / Wav audio recorder with nice api.
  * Record Pcm audio
  * Record Wav audio
  * Configure audio source to have desired output
+ * Record with pause / resume feature
+ 
+<a href='https://play.google.com/store/apps/details?id=com.kingbull.omrecorder&pcampaignid=MKT-Other-global-all-co-prtnr-py-PartBadge-Mar2515-1'><img alt='Get it on Google Play'  height="80" src='https://play.google.com/intl/en_us/badges/images/generic/en_badge_web_generic.png'/></a>
 
+Add these permissions into your `AndroidManifest.xml` and [request for them in Android 6.0+](https://developer.android.com/training/permissions/requesting.html)
+```xml
+<uses-permission android:name="android.permission.RECORD_AUDIO"/>
+<uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
+```
 ```java
 
   recorder = OmRecorder.wav(
@@ -55,15 +63,49 @@ __Start & Stop Recording__
     recorder.startRecording();
     recorder.stopRecording();
 ```
+__Pause & Resume Recording__
+```java
+    recorder.pauseRecording();
+    recorder.resumeRecording();
+```
+
+For documentation and additional information see [the website][1].
 
 Download
 --------
     compile 'com.kailashdabhi:om-recorder:1.1.2'
     
+
+Donations
+---------
+
+This project needs you! If you would like to support this project's further development, the creator of this project or the continuous maintenance of this project, feel free to donate. Your donation is highly appreciated (and I love food, coffee and beer). Thank you!
+
+**PayPal**
+
+* **[Donate $5]**: Thank's for creating this project, here's a coffee (or some beer) for you!
+* **[Donate $10]**: Wow, I am stunned. Let me take you to the movies!
+* **[Donate $15]**: I really appreciate your work, let's grab some lunch!
+* **[Donate $25]**: That's some awesome stuff you did right there, dinner is on me!
+* **[Donate $50]**: I really really want to support this project, great job!
+* **[Donate $100]**: You are the man! This project saved me hours (if not days) of struggle and hard work, simply awesome!
+* **[Donate $2799]**: Go buddy, buy Macbook Pro for yourself!
+Of course, you can also choose what you want to donate, all donations are awesome!
+
+## Contributing Code
+
+If you would like to help provide the other format to be recorded then please implement the  WriteAction interface to provide mp3, amr,etc and then create pull request.
+
+1. Fork it
+2. Create your feature branch (`git checkout -b my-new-feature`)
+3. Commit your changes (`git commit -am 'Add some feature'`)
+4. Push to the branch (`git push origin my-new-feature`)
+5. Create new Pull Request
+    
 License
 -------
 
-    Copyright 2016 Kailash Dabhi (Kingbull Technology)
+    Copyright 2017 Kailash Dabhi (Kingbull Technology)
 
     Licensed under the Apache License, Version 2.0 (the "License");
     you may not use this file except in compliance with the License.
@@ -78,3 +120,11 @@ License
     limitations under the License.
 
 
+ [1]: https://kailash09dabhi.github.io/OmRecorder/
+ [Donate $5]: 		https://www.paypal.me/MrKailashDabhi/5
+ [Donate $10]:  		https://www.paypal.me/MrKailashDabhi/10
+ [Donate $15]:  		https://www.paypal.me/MrKailashDabhi/15
+ [Donate $25]:  		https://www.paypal.me/MrKailashDabhi/25
+ [Donate $50]: 		https://www.paypal.me/MrKailashDabhi/50
+ [Donate $100]: 		https://www.paypal.me/MrKailashDabhi/100
+ [Donate $2799]: 	https://www.paypal.me/MrKailashDabhi/2799
