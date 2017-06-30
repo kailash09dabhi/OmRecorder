@@ -31,14 +31,15 @@ public interface WriteAction {
    * requires {@code data} to encode. So here One can encode the data
    * according to chosen audio format.
    */
-  void execute(byte[] data, OutputStream outputStream) throws IOException;
+  void execute(AudioChunk audioChunk, OutputStream outputStream) throws IOException;
 
   /**
    * Use this default implementation to write data directly without any encoding to OutputStream.
    */
   final class Default implements WriteAction {
-    @Override public void execute(byte[] data, OutputStream outputStream) throws IOException {
-      outputStream.write(data);
+    @Override public void execute(AudioChunk audioChunk, OutputStream outputStream)
+        throws IOException {
+      outputStream.write(audioChunk.toBytes());
     }
   }
 }

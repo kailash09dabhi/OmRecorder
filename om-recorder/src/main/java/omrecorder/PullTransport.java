@@ -140,7 +140,7 @@ public interface PullTransport {
           if (onAudioChunkPulledListener != null) {
             postPullEvent(audioChunk);
           }
-          writeAction.execute(audioChunk.toBytes(), outputStream);
+          writeAction.execute(audioChunk, outputStream);
         }
       }
     }
@@ -200,7 +200,7 @@ public interface PullTransport {
             postPullEvent(audioChunk);
           }
           if (audioChunk.peakIndex() > -1) {
-            writeAction.execute(audioChunk.toBytes(), outputStream);
+            writeAction.execute(audioChunk, outputStream);
             firstSilenceMoment = 0;
             noiseRecordedAfterFirstSilenceThreshold++;
           } else {
@@ -214,7 +214,7 @@ public interface PullTransport {
                 }
               }
             } else {
-              writeAction.execute(audioChunk.toBytes(), outputStream);
+              writeAction.execute(audioChunk, outputStream);
             }
           }
         }
