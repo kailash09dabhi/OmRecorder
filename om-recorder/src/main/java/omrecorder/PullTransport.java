@@ -65,11 +65,11 @@ public interface PullTransport {
     }
 
     @Override public void start(OutputStream outputStream) throws IOException {
-      startPoolingAndWriting(preparedSourceToBePulled(), audioRecordSource.minimumBufferSize(),
+      startPoolingAndWriting(preparedSourceToBePulled(), audioRecordSource.pullSizeInBytes(),
           outputStream);
     }
 
-    void startPoolingAndWriting(AudioRecord audioRecord, int minimumBufferSize,
+    void startPoolingAndWriting(AudioRecord audioRecord, int pullSizeInBytes,
         OutputStream outputStream) throws IOException {
     }
 
@@ -130,11 +130,11 @@ public interface PullTransport {
       this(audioRecordSource, null, new WriteAction.Default());
     }
 
-    @Override void startPoolingAndWriting(AudioRecord audioRecord, int minimumBufferSize,
+    @Override void startPoolingAndWriting(AudioRecord audioRecord, int pullSizeInBytes,
         OutputStream outputStream) throws IOException {
-      AudioChunk audioChunk = new AudioChunk.Bytes(new byte[minimumBufferSize]);
+      AudioChunk audioChunk = new AudioChunk.Bytes(new byte[pullSizeInBytes]);
       while (audioRecordSource.isEnableToBePulled()) {
-        audioChunk.readCount(audioRecord.read(audioChunk.toBytes(), 0, minimumBufferSize));
+        audioChunk.readCount(audioRecord.read(audioChunk.toBytes(), 0, pullSizeInBytes));
         if (AudioRecord.ERROR_INVALID_OPERATION != audioChunk.readCount()
             && AudioRecord.ERROR_BAD_VALUE != audioChunk.readCount()) {
           if (onAudioChunkPulledListener != null) {
@@ -188,9 +188,9 @@ public interface PullTransport {
       this(audioRecordSource, null, new WriteAction.Default(), null, 200);
     }
 
-    @Override void startPoolingAndWriting(AudioRecord audioRecord, int minimumBufferSize,
+    @Override void startPoolingAndWriting(AudioRecord audioRecord, int pullSizeInBytes,
         OutputStream outputStream) throws IOException {
-      final AudioChunk.Shorts audioChunk = new AudioChunk.Shorts(new short[minimumBufferSize]);
+      final AudioChunk.Shorts audioChunk = new AudioChunk.Shorts(new short[pullSizeInBytes]);
       while (audioRecordSource.isEnableToBePulled()) {
         short[] shorts = audioChunk.toShorts();
         audioChunk.readCount(audioRecord.read(shorts, 0, shorts.length));

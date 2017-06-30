@@ -31,9 +31,12 @@ public interface AudioSource {
 
   int frequency();
 
-  int minimumBufferSize();
-
   byte bitsPerSample();
+
+  /**
+   * @return number of bytes to be read from @{@link AudioSource}
+   */
+  int pullSizeInBytes();
 
   void isEnableToBePulled(boolean enabledToBePulled);
 
@@ -49,15 +52,33 @@ public interface AudioSource {
     private final int channelPositionMask;
     private final int audioEncoding;
     private final int frequency;
+    private final int pullSizeInBytes;
+    private final int minimumBufferSize;
     private volatile boolean pull;
 
     public Smart(int audioSource, int audioEncoding, int channelPositionMask, int frequency) {
+      this(audioSource, audioEncoding, channelPositionMask, frequency, -1);
+    }
+
+    public Smart(int audioSource, int audioEncoding, int channelPositionMask, int frequency,
+        int pullSizeInBytes) {
       this.audioSource = audioSource;
       this.audioEncoding = audioEncoding;
       this.channelPositionMask = channelPositionMask;
       this.frequency = frequency;
+      this.minimumBufferSize = minimumBufferSize(frequency, channelPositionMask, audioEncoding);
       this.audioRecord = new AudioRecord(audioSource, frequency, channelPositionMask, audioEncoding,
-          minimumBufferSize());
+          minimumBufferSize);
+      if (pullSizeInBytes == -1) {
+        this.pullSizeInBytes = minimumBufferSize;
+      } else {
+        this.pullSizeInBytes = pullSizeInBytes;
+      }
+    }
+
+    private static int minimumBufferSize(int frequency, int channelPositionMask,
+        int audioEncoding) {
+      return AudioRecord.getMinBufferSize(frequency, channelPositionMask, audioEncoding);
     }
 
     @Override public AudioRecord audioRecorder() {
@@ -72,10 +93,6 @@ public interface AudioSource {
       return frequency;
     }
 
-    @Override public int minimumBufferSize() {
-      return AudioRecord.getMinBufferSize(frequency, channelPositionMask, audioEncoding);
-    }
-
     @Override public byte bitsPerSample() {
       if (audioEncoding == AudioFormat.ENCODING_PCM_16BIT) {
         return 16;
@@ -84,6 +101,10 @@ public interface AudioSource {
       } else {
         return 16;
       }
+    }
+
+    @Override public int pullSizeInBytes() {
+      return pullSizeInBytes;
     }
 
     @Override public void isEnableToBePulled(boolean enabledToBePulled) {
