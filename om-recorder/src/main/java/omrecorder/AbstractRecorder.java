@@ -28,7 +28,7 @@ import java.util.concurrent.Executors;
  * @date 22-08-2016.
  * Copyright (c) 2017 Kingbull Technology. All rights reserved.
  */
-abstract class AbstractRecorder implements Recorder {
+public abstract class AbstractRecorder implements Recorder {
   protected final PullTransport pullTransport;
   protected final File file;
   private final ExecutorService executorService = Executors.newSingleThreadExecutor();
