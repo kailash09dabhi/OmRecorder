@@ -1,6 +1,8 @@
 package omrecorder;
 
 import android.media.AudioRecord;
+import android.os.Build;
+import android.util.Log;
 
 /**
  * An {@code PullableSource} represents {@link Source} which is Pullable
@@ -19,6 +21,49 @@ public interface PullableSource extends Source {
   boolean isEnableToBePulled();
 
   AudioRecord preparedToBePulled();
+
+  class Base implements PullableSource {
+    private final PullableSource pullableSource;
+
+    Base(PullableSource pullableSource) {
+      this.pullableSource = pullableSource;
+    }
+
+    @Override
+    public AudioRecord audioRecord() {
+      return pullableSource.audioRecord();
+    }
+
+    @Override
+    public AudioRecordConfig config() {
+      return pullableSource.config();
+    }
+
+    @Override
+    public int minimumBufferSize() {
+      return pullableSource.minimumBufferSize();
+    }
+
+    @Override
+    public int pullSizeInBytes() {
+      return pullableSource.pullSizeInBytes();
+    }
+
+    @Override
+    public void isEnableToBePulled(boolean enabledToBePulled) {
+      pullableSource.isEnableToBePulled(enabledToBePulled);
+    }
+
+    @Override
+    public boolean isEnableToBePulled() {
+      return pullableSource.isEnableToBePulled();
+    }
+
+    @Override
+    public AudioRecord preparedToBePulled() {
+      return pullableSource.preparedToBePulled();
+    }
+  }
 
   class Default extends Source.Default implements PullableSource {
     private final int pullSizeInBytes;
@@ -58,5 +103,31 @@ public interface PullableSource extends Source {
     }
   }
 
+  class NoiseSuppressor extends Base {
+    public NoiseSuppressor(PullableSource pullableSource) {
+      super(pullableSource);
+    }
 
+    @Override
+    public AudioRecord preparedToBePulled() {
+      if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN) {
+        if (android.media.audiofx.NoiseSuppressor.isAvailable()) {
+          android.media.audiofx.NoiseSuppressor noiseSuppressor = android.media.audiofx.NoiseSuppressor
+              .create(audioRecord().getAudioSessionId());
+          if (noiseSuppressor != null) {
+            noiseSuppressor.setEnabled(true);
+            Log.i(getClass().getSimpleName(), "NoiseSuppressor ON");
+          } else {
+            Log.i(getClass().getSimpleName(), "NoiseSuppressor failed :(");
+          }
+        } else {
+          Log.i(getClass().getSimpleName(), "This device don't support NoiseSuppressor");
+        }
+      } else {
+        Log.i(getClass().getSimpleName(),
+            "For this effect, Android api should be higher than or equals 16");
+      }
+      return super.preparedToBePulled();
+    }
+  }
 }
