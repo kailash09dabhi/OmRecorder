@@ -130,4 +130,32 @@ public interface PullableSource extends Source {
       return super.preparedToBePulled();
     }
   }
+
+  class AutomaticGainControl extends Base {
+    public AutomaticGainControl(PullableSource pullableSource) {
+      super(pullableSource);
+    }
+
+    @Override
+    public AudioRecord preparedToBePulled() {
+      if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN) {
+        if (android.media.audiofx.AutomaticGainControl.isAvailable()) {
+          android.media.audiofx.AutomaticGainControl automaticGainControl = android.media.audiofx.AutomaticGainControl
+              .create(audioRecord().getAudioSessionId());
+          if (automaticGainControl != null) {
+            automaticGainControl.setEnabled(true);
+            Log.i(getClass().getSimpleName(), "AutomaticGainControl ON");
+          } else {
+            Log.i(getClass().getSimpleName(), "AutomaticGainControl failed :(");
+          }
+        } else {
+          Log.i(getClass().getSimpleName(), "This device don't support AutomaticGainControl");
+        }
+      } else {
+        Log.i(getClass().getSimpleName(),
+            "For this effect, Android api should be higher than or equals 16");
+      }
+      return super.preparedToBePulled();
+    }
+  }
 }
