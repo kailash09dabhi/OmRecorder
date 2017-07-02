@@ -20,52 +20,53 @@ import java.io.IOException;
 import java.io.OutputStream;
 
 /**
- * A PullTransport is a object who pulls the data from {@code AudioSource} and transport it to
- * OutputStream
+ * This class represents a bus between {@link PullableSource} and  {@link OutputStream}.
+ * Basically it just pulls the data from {@link PullableSource} and transport it to
+ * {@link OutputStream}
  *
  * @author Kailash Dabhi
  * @date 06-07-2016
  */
 public interface PullTransport {
   /**
-   * It starts to pull the {@code  AudioSource}  and transport it to
-   * OutputStream
+   * It starts to pull the {@link PullableSource} and transport it to
+   * {@link OutputStream}
    *
    * @param outputStream the OutputStream where we want to transport the pulled audio data.
    * @throws IOException if there is any problem arise in pulling and transporting
    */
   void start(OutputStream outputStream) throws IOException;
 
-  //It immediately stop pulling {@code  AudioSource}
+  //It immediately stop pulling PullableSource
   void stop();
 
-  //Returns the source which is used for pulling
-  AudioSource source();
+  //Returns the pullableSource which is used for pulling
+  PullableSource pullableSource();
 
   /**
-   * Interface definition for a callback to be invoked when a chunk of audio is pulled from {@code
-   * AudioSource}.
+   * Interface definition for a callback to be invoked when a chunk of audio is pulled from
+   * {@link PullableSource}.
    */
   interface OnAudioChunkPulledListener {
     /**
-     * Called when {@code AudioSource} is pulled and returned{@code AudioChunk}.
+     * Called when {@link PullableSource} is pulled and returned{@link AudioChunk}.
      */
     void onAudioChunkPulled(AudioChunk audioChunk);
   }
 
   abstract class AbstractPullTransport implements PullTransport {
-    final AudioSource audioRecordSource;
+    final PullableSource pullableSource;
     final OnAudioChunkPulledListener onAudioChunkPulledListener;
     private final UiThread uiThread = new UiThread();
 
-    AbstractPullTransport(AudioSource audioRecordSource,
+    AbstractPullTransport(PullableSource pullableSource,
         OnAudioChunkPulledListener onAudioChunkPulledListener) {
-      this.audioRecordSource = audioRecordSource;
+      this.pullableSource = pullableSource;
       this.onAudioChunkPulledListener = onAudioChunkPulledListener;
     }
 
     @Override public void start(OutputStream outputStream) throws IOException {
-      startPoolingAndWriting(preparedSourceToBePulled(), audioRecordSource.pullSizeInBytes(),
+      startPoolingAndWriting(pullableSource.preparedToBePulled(), pullableSource.pullSizeInBytes(),
           outputStream);
     }
 
@@ -73,21 +74,14 @@ public interface PullTransport {
         OutputStream outputStream) throws IOException {
     }
 
-    AudioRecord preparedSourceToBePulled() {
-      final AudioRecord audioRecord = audioRecordSource.audioRecorder();
-      audioRecord.startRecording();
-      audioRecordSource.isEnableToBePulled(true);
-      return audioRecord;
-    }
-
     @Override public void stop() {
-      audioRecordSource.isEnableToBePulled(false);
-      audioRecordSource.audioRecorder().stop();
-      audioRecordSource.audioRecorder().release();
+      pullableSource.isEnableToBePulled(false);
+      pullableSource.audioRecord().stop();
+      pullableSource.audioRecord().release();
     }
 
-    public AudioSource source() {
-      return audioRecordSource;
+    public PullableSource pullableSource() {
+      return pullableSource;
     }
 
     void postSilenceEvent(final Recorder.OnSilenceListener onSilenceListener,
@@ -111,29 +105,29 @@ public interface PullTransport {
   final class Default extends AbstractPullTransport {
     private final WriteAction writeAction;
 
-    public Default(AudioSource audioRecordSource, WriteAction writeAction) {
-      this(audioRecordSource, null, writeAction);
+    public Default(PullableSource pullableSource, WriteAction writeAction) {
+      this(pullableSource, null, writeAction);
     }
 
-    public Default(AudioSource audioRecordSource,
+    public Default(PullableSource pullableSource,
         OnAudioChunkPulledListener onAudioChunkPulledListener, WriteAction writeAction) {
-      super(audioRecordSource, onAudioChunkPulledListener);
+      super(pullableSource, onAudioChunkPulledListener);
       this.writeAction = writeAction;
     }
 
-    public Default(AudioSource audioRecordSource,
+    public Default(PullableSource pullableSource,
         OnAudioChunkPulledListener onAudioChunkPulledListener) {
-      this(audioRecordSource, onAudioChunkPulledListener, new WriteAction.Default());
+      this(pullableSource, onAudioChunkPulledListener, new WriteAction.Default());
     }
 
-    public Default(AudioSource audioRecordSource) {
+    public Default(PullableSource audioRecordSource) {
       this(audioRecordSource, null, new WriteAction.Default());
     }
 
     @Override void startPoolingAndWriting(AudioRecord audioRecord, int pullSizeInBytes,
         OutputStream outputStream) throws IOException {
       AudioChunk audioChunk = new AudioChunk.Bytes(new byte[pullSizeInBytes]);
-      while (audioRecordSource.isEnableToBePulled()) {
+      while (pullableSource.isEnableToBePulled()) {
         audioChunk.readCount(audioRecord.read(audioChunk.toBytes(), 0, pullSizeInBytes));
         if (AudioRecord.ERROR_INVALID_OPERATION != audioChunk.readCount()
             && AudioRecord.ERROR_BAD_VALUE != audioChunk.readCount()) {
@@ -153,45 +147,45 @@ public interface PullTransport {
     private long firstSilenceMoment = 0;
     private int noiseRecordedAfterFirstSilenceThreshold = 0;
 
-    public Noise(AudioSource audioRecordSource,
+    public Noise(PullableSource pullableSource,
         OnAudioChunkPulledListener onAudioChunkPulledListener,
         Recorder.OnSilenceListener silenceListener, long silenceTimeThreshold) {
-      this(audioRecordSource, onAudioChunkPulledListener, new WriteAction.Default(),
+      this(pullableSource, onAudioChunkPulledListener, new WriteAction.Default(),
           silenceListener, silenceTimeThreshold);
     }
 
-    public Noise(AudioSource audioRecordSource,
+    public Noise(PullableSource pullableSource,
         OnAudioChunkPulledListener onAudioChunkPulledListener, WriteAction writeAction,
         Recorder.OnSilenceListener silenceListener, long silenceTimeThreshold) {
-      super(audioRecordSource, onAudioChunkPulledListener);
+      super(pullableSource, onAudioChunkPulledListener);
       this.writeAction = writeAction;
       this.silenceListener = silenceListener;
       this.silenceTimeThreshold = silenceTimeThreshold;
     }
 
-    public Noise(AudioSource audioRecordSource, WriteAction writeAction,
+    public Noise(PullableSource pullableSource, WriteAction writeAction,
         Recorder.OnSilenceListener silenceListener, long silenceTimeThreshold) {
-      this(audioRecordSource, null, writeAction, silenceListener, silenceTimeThreshold);
+      this(pullableSource, null, writeAction, silenceListener, silenceTimeThreshold);
     }
 
-    public Noise(AudioSource audioRecordSource, Recorder.OnSilenceListener silenceListener,
+    public Noise(PullableSource pullableSource, Recorder.OnSilenceListener silenceListener,
         long silenceTimeThreshold) {
-      this(audioRecordSource, null, new WriteAction.Default(), silenceListener,
+      this(pullableSource, null, new WriteAction.Default(), silenceListener,
           silenceTimeThreshold);
     }
 
-    public Noise(AudioSource audioRecordSource, Recorder.OnSilenceListener silenceListener) {
-      this(audioRecordSource, null, new WriteAction.Default(), silenceListener, 200);
+    public Noise(PullableSource pullableSource, Recorder.OnSilenceListener silenceListener) {
+      this(pullableSource, null, new WriteAction.Default(), silenceListener, 200);
     }
 
-    public Noise(AudioSource audioRecordSource) {
-      this(audioRecordSource, null, new WriteAction.Default(), null, 200);
+    public Noise(PullableSource pullableSource) {
+      this(pullableSource, null, new WriteAction.Default(), null, 200);
     }
 
     @Override void startPoolingAndWriting(AudioRecord audioRecord, int pullSizeInBytes,
         OutputStream outputStream) throws IOException {
       final AudioChunk.Shorts audioChunk = new AudioChunk.Shorts(new short[pullSizeInBytes]);
-      while (audioRecordSource.isEnableToBePulled()) {
+      while (pullableSource.isEnableToBePulled()) {
         short[] shorts = audioChunk.toShorts();
         audioChunk.readCount(audioRecord.read(shorts, 0, shorts.length));
         if (AudioRecord.ERROR_INVALID_OPERATION != audioChunk.readCount()
@@ -204,13 +198,17 @@ public interface PullTransport {
             firstSilenceMoment = 0;
             noiseRecordedAfterFirstSilenceThreshold++;
           } else {
-            if (firstSilenceMoment == 0) firstSilenceMoment = System.currentTimeMillis();
+            if (firstSilenceMoment == 0) {
+              firstSilenceMoment = System.currentTimeMillis();
+            }
             final long silenceTime = System.currentTimeMillis() - firstSilenceMoment;
             if (firstSilenceMoment != 0 && silenceTime > this.silenceTimeThreshold) {
               if (silenceTime > 1000) {
                 if (noiseRecordedAfterFirstSilenceThreshold >= 3) {
                   noiseRecordedAfterFirstSilenceThreshold = 0;
-                  if (silenceListener != null) postSilenceEvent(silenceListener, silenceTime);
+                  if (silenceListener != null) {
+                    postSilenceEvent(silenceListener, silenceTime);
+                  }
                 }
               }
             } else {

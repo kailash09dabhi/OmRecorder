@@ -18,7 +18,7 @@ package omrecorder;
 import android.media.AudioFormat;
 
 /**
- * An {@code AudioSource} is an interface to configure the Audio Source.
+ * This is an interface to configure the {@link Source}
  *
  * @author Kailash Dabhi
  * @date 06-07-2016

@@ -24,19 +24,20 @@ import android.media.AudioFormat;
  * @date 26-07-2016
  */
 final class WavHeader {
-  private final AudioSource audioRecordSource;
+  private final PullableSource pullableSource;
   private final long totalAudioLength;
 
-  WavHeader(AudioSource audioRecordSource, long totalAudioLength) {
-    this.audioRecordSource = audioRecordSource;
+  WavHeader(PullableSource pullableSource, long totalAudioLength) {
+    this.pullableSource = pullableSource;
     this.totalAudioLength = totalAudioLength;
   }
 
   /** Returns the {@code WavHeader} in bytes. */
   public byte[] toBytes() {
-    long sampleRateInHz = audioRecordSource.frequency();
-    int channels = (audioRecordSource.channelPositionMask() == AudioFormat.CHANNEL_IN_MONO ? 1 : 2);
-    byte bitsPerSample = audioRecordSource.bitsPerSample();
+    long sampleRateInHz = pullableSource.config().frequency();
+    int channels =
+        (pullableSource.config().channelPositionMask() == AudioFormat.CHANNEL_IN_MONO ? 1 : 2);
+    byte bitsPerSample = pullableSource.config().bitsPerSample();
     return wavFileHeader(totalAudioLength - 44, totalAudioLength - 44 + 36, sampleRateInHz,
         channels, bitsPerSample * sampleRateInHz * channels / 8, bitsPerSample);
   }

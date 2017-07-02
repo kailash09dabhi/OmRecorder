@@ -56,13 +56,15 @@ public abstract class AbstractRecorder implements Recorder {
   }
 
   private OutputStream outputStream(File file) {
-    if (file == null) throw new RuntimeException("file is null !");
+    if (file == null) {
+      throw new RuntimeException("file is null !");
+    }
     OutputStream outputStream;
     try {
       outputStream = new FileOutputStream(file);
     } catch (FileNotFoundException e) {
       throw new RuntimeException(
-          "could not build OutputStream from" + " this file" + file.getName(), e);
+          "could not build OutputStream from" + " this file " + file.getName(), e);
     }
     return outputStream;
   }
@@ -74,11 +76,11 @@ public abstract class AbstractRecorder implements Recorder {
   }
 
   @Override public void pauseRecording() {
-    pullTransport.source().isEnableToBePulled(false);
+    pullTransport.pullableSource().isEnableToBePulled(false);
   }
 
   @Override public void resumeRecording() {
-    pullTransport.source().isEnableToBePulled(true);
+    pullTransport.pullableSource().isEnableToBePulled(true);
     executorService.submit(recordingTask);
   }
 }
