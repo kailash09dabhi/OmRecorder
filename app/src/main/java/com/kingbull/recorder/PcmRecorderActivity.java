@@ -5,7 +5,7 @@
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
  *
- *      http://www.apache.org/licenses/LICENSE-2.0
+ * http://www.apache.org/licenses/LICENSE-2.0
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
@@ -31,16 +31,16 @@ import android.widget.Toast;
 import java.io.File;
 import java.io.IOException;
 import omrecorder.AudioChunk;
-import omrecorder.AudioSource;
+import omrecorder.AudioRecordConfig;
 import omrecorder.OmRecorder;
 import omrecorder.PullTransport;
+import omrecorder.PullableSource;
 import omrecorder.Recorder;
 import omrecorder.WriteAction;
 
 /**
  * @author Kailash Dabhi
- * @date 26-07-2016.
- * Copyright (c) 2017 Kingbull Technology. All rights reserved.
+ * @date 26-07-2016. Copyright (c) 2017 Kingbull Technology. All rights reserved.
  */
 public class PcmRecorderActivity extends AppCompatActivity {
   Recorder recorder;
@@ -99,7 +99,7 @@ public class PcmRecorderActivity extends AppCompatActivity {
             @Override public void run() {
               animateVoice(0);
             }
-          },100);
+          }, 100);
         } else {
           pauseResumeButton.setText(getString(R.string.pause_recording));
           recorder.resumeRecording();
@@ -120,26 +120,35 @@ public class PcmRecorderActivity extends AppCompatActivity {
 
   private void setupNoiseRecorder() {
     recorder = OmRecorder.pcm(
-        new PullTransport.Noise(mic(), new PullTransport.OnAudioChunkPulledListener() {
-          @Override public void onAudioChunkPulled(AudioChunk audioChunk) {
-            animateVoice((float) (audioChunk.maxAmplitude() / 200.0));
-          }
-        }, new WriteAction.Default(), new Recorder.OnSilenceListener() {
-          @Override public void onSilence(long silenceTime) {
-            Log.e("silenceTime", String.valueOf(silenceTime));
-            Toast.makeText(PcmRecorderActivity.this, "silence of " + silenceTime + " detected",
-                Toast.LENGTH_SHORT).show();
-          }
-        }, 200), file());
+        new PullTransport.Noise(mic(),
+            new PullTransport.OnAudioChunkPulledListener() {
+              @Override public void onAudioChunkPulled(AudioChunk audioChunk) {
+                animateVoice((float) (audioChunk.maxAmplitude() / 200.0));
+              }
+            },
+            new WriteAction.Default(),
+            new Recorder.OnSilenceListener() {
+              @Override public void onSilence(long silenceTime) {
+                Log.e("silenceTime", String.valueOf(silenceTime));
+                Toast.makeText(PcmRecorderActivity.this, "silence of " + silenceTime + " detected",
+                    Toast.LENGTH_SHORT).show();
+              }
+            }, 200
+        ), file()
+    );
   }
 
   private void animateVoice(final float maxPeak) {
     recordButton.animate().scaleX(1 + maxPeak).scaleY(1 + maxPeak).setDuration(10).start();
   }
 
-  private AudioSource mic() {
-    return new AudioSource.Smart(MediaRecorder.AudioSource.MIC, AudioFormat.ENCODING_PCM_16BIT,
-        AudioFormat.CHANNEL_IN_MONO, 44100);
+  private PullableSource mic() {
+    return new PullableSource.Default(
+        new AudioRecordConfig.Default(
+            MediaRecorder.AudioSource.MIC, AudioFormat.ENCODING_PCM_16BIT,
+            AudioFormat.CHANNEL_IN_MONO, 44100
+        )
+    );
   }
 
   @NonNull private File file() {

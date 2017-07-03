@@ -31,16 +31,16 @@ import android.widget.Toast;
 import java.io.File;
 import java.io.IOException;
 import omrecorder.AudioChunk;
-import omrecorder.AudioSource;
+import omrecorder.AudioRecordConfig;
 import omrecorder.OmRecorder;
 import omrecorder.PullTransport;
+import omrecorder.PullableSource;
 import omrecorder.Recorder;
 import omrecorder.WriteAction;
 
 /**
  * @author Kailash Dabhi
- * @date 18-07-2016.
- * Copyright (c) 2017 Kingbull Technology. All rights reserved.
+ * @date 18-07-2016. Copyright (c) 2017 Kingbull Technology. All rights reserved.
  */
 public class WavRecorderActivity extends AppCompatActivity {
   Recorder recorder;
@@ -123,26 +123,35 @@ public class WavRecorderActivity extends AppCompatActivity {
 
   private void setupNoiseRecorder() {
     recorder = OmRecorder.wav(
-        new PullTransport.Noise(mic(), new PullTransport.OnAudioChunkPulledListener() {
-          @Override public void onAudioChunkPulled(AudioChunk audioChunk) {
-            animateVoice((float) (audioChunk.maxAmplitude() / 200.0));
-          }
-        }, new WriteAction.Default(), new Recorder.OnSilenceListener() {
-          @Override public void onSilence(long silenceTime) {
-            Log.e("silenceTime", String.valueOf(silenceTime));
-            Toast.makeText(WavRecorderActivity.this, "silence of " + silenceTime + " detected",
-                Toast.LENGTH_SHORT).show();
-          }
-        }, 200), file());
+        new PullTransport.Noise(mic(),
+            new PullTransport.OnAudioChunkPulledListener() {
+              @Override public void onAudioChunkPulled(AudioChunk audioChunk) {
+                animateVoice((float) (audioChunk.maxAmplitude() / 200.0));
+              }
+            },
+            new WriteAction.Default(),
+            new Recorder.OnSilenceListener() {
+              @Override public void onSilence(long silenceTime) {
+                Log.e("silenceTime", String.valueOf(silenceTime));
+                Toast.makeText(WavRecorderActivity.this, "silence of " + silenceTime + " detected",
+                    Toast.LENGTH_SHORT).show();
+              }
+            }, 200
+        ), file()
+    );
   }
 
   private void animateVoice(final float maxPeak) {
     recordButton.animate().scaleX(1 + maxPeak).scaleY(1 + maxPeak).setDuration(10).start();
   }
 
-  private AudioSource mic() {
-    return new AudioSource.Smart(MediaRecorder.AudioSource.MIC, AudioFormat.ENCODING_PCM_16BIT,
-        AudioFormat.CHANNEL_IN_MONO, 44100);
+  private PullableSource mic() {
+    return new PullableSource.Default(
+        new AudioRecordConfig.Default(
+            MediaRecorder.AudioSource.MIC, AudioFormat.ENCODING_PCM_16BIT,
+            AudioFormat.CHANNEL_IN_MONO, 44100
+        )
+    );
   }
 
   @NonNull private File file() {
