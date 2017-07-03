@@ -23,27 +23,32 @@ Add these permissions into your `AndroidManifest.xml` and [request for them in A
 ```java
 
   recorder = OmRecorder.wav(
-      new PullTransport.Default(mic(), new PullTransport.OnAudioChunkPulledListener() {
-        @Override public void onAudioChunkPulled(AudioChunk audioChunk) {
-          animateVoice((float) (audioChunk.maxAmplitude() / 200.0));
-        }
-      }), file());
+        new PullTransport.Default(mic(), new PullTransport.OnAudioChunkPulledListener() {
+          @Override public void onAudioChunkPulled(AudioChunk audioChunk) {
+            animateVoice((float) (audioChunk.maxAmplitude() / 200.0));
+          }
+        }), file());
 ```   
 __For Skip Silence__
 ```java
   // FOR SKIP SILENCE     
-  recorder = OmRecorder.wav(
-      new PullTransport.Noise(mic(), new PullTransport.OnAudioChunkPulledListener() {
-          @Override public void onAudioChunkPulled(AudioChunk audioChunk) {
-            animateVoice((float) (audioChunk.maxAmplitude() / 200.0));
-          }
-      }, new WriteAction.Default(), new Recorder.OnSilenceListener() {
-        @Override public void onSilence(long silenceTime) {
-           Log.e("silenceTime", String.valueOf(silenceTime));
-           Toast.makeText(WavRecorderActivity.this, "silence of " + silenceTime + " detected",
-               Toast.LENGTH_SHORT).show();
-         }
-      }, 200/**silence threshold**/), file());
+ recorder = OmRecorder.wav(
+        new PullTransport.Noise(mic(),
+            new PullTransport.OnAudioChunkPulledListener() {
+              @Override public void onAudioChunkPulled(AudioChunk audioChunk) {
+                animateVoice((float) (audioChunk.maxAmplitude() / 200.0));
+              }
+            },
+            new WriteAction.Default(),
+            new Recorder.OnSilenceListener() {
+              @Override public void onSilence(long silenceTime) {
+                Log.e("silenceTime", String.valueOf(silenceTime));
+                Toast.makeText(WavRecorderActivity.this, "silence of " + silenceTime + " detected",
+                    Toast.LENGTH_SHORT).show();
+              }
+            }, 200
+        ), file()
+    );
       
  @NonNull private File file() {
     return new File(Environment.getExternalStorageDirectory(), "demo.wav");
@@ -52,11 +57,48 @@ __For Skip Silence__
 ```
 __Configure Audio Source__
 ```java
-  private AudioSource mic() {
-    return new AudioSource.Smart(MediaRecorder.AudioSource.MIC, AudioFormat.ENCODING_PCM_16BIT,
-        AudioFormat.CHANNEL_IN_MONO, 44100);
-  }
-
+  return new PullableSource.Default(
+         new AudioRecordConfig.Default(
+             MediaRecorder.AudioSource.MIC, AudioFormat.ENCODING_PCM_16BIT,
+             AudioFormat.CHANNEL_IN_MONO, 44100
+         )
+     );
+     
+   To Enable NoiseSuppresor (android.media.audiofx.NoiseSuppressor)
+   
+   return new PullableSource.NoiseSuppressor(
+          new PullableSource.Default(
+              new AudioRecordConfig.Default(
+                  MediaRecorder.AudioSource.MIC, AudioFormat.ENCODING_PCM_16BIT,
+                  AudioFormat.CHANNEL_IN_MONO, 44100
+              )
+          )
+      );   
+      
+   To Enable AutomaticGainControl (android.media.audiofx.AutomaticGainControl)
+   
+   return new PullableSource.AutomaticGainControl(
+            new PullableSource.Default(
+                new AudioRecordConfig.Default(
+                    MediaRecorder.AudioSource.MIC, AudioFormat.ENCODING_PCM_16BIT,
+                    AudioFormat.CHANNEL_IN_MONO, 44100
+                )
+            )
+        );    
+        
+   and if you want both NoiseSuppressor & AutomaticGainControl :-
+   
+   return new PullableSource.AutomaticGainControl(
+           new PullableSource.NoiseSuppressor(
+               new PullableSource.Default(
+                   new AudioRecordConfig.Default(
+                       MediaRecorder.AudioSource.MIC, AudioFormat.ENCODING_PCM_16BIT,
+                       AudioFormat.CHANNEL_IN_MONO, 44100
+                   )
+               )
+           )
+       );
+       
 ```
 __Start & Stop Recording__
 ```java
@@ -73,7 +115,7 @@ For documentation and additional information see [the website][1].
 
 Download
 --------
-    compile 'com.kailashdabhi:om-recorder:1.1.3'
+    compile 'com.kailashdabhi:om-recorder:1.1.5'
     
 
 Donations
