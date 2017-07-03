@@ -4,7 +4,7 @@
 Om Recorder
 ============
 
-![Logo](website/static/om.png)
+![Logo](images/om.png)
 
 A Simple Pcm / Wav audio recorder with nice api. 
 
