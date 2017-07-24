@@ -15,7 +15,10 @@
  */
 package omrecorder;
 
+import android.icu.util.Output;
+
 import java.io.File;
+import java.io.OutputStream;
 
 /**
  * Essential APIs for working with OmRecorder.
@@ -31,7 +34,15 @@ public final class OmRecorder {
     return new Pcm(pullTransport, file);
   }
 
+  public static Recorder pcm(PullTransport pullTransport, OutputStream outputStream) {
+    return new Pcm(pullTransport, outputStream);
+  }
+
   public static Recorder wav(PullTransport pullTransport, File file) {
     return new Wav(pullTransport, file);
+  }
+
+  public static Recorder wav(PullTransport pullTransport, OutputStream outputStream) {
+    return new Wav(pullTransport, outputStream);
   }
 }

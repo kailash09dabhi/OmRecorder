@@ -18,6 +18,7 @@ package omrecorder;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.io.OutputStream;
 import java.io.RandomAccessFile;
 
 /**
@@ -29,6 +30,10 @@ import java.io.RandomAccessFile;
 final class Wav extends AbstractRecorder {
   public Wav(PullTransport pullTransport, File file) {
     super(pullTransport, file);
+  }
+
+  public Wav(PullTransport pullTransport, OutputStream outputStream) {
+    super(pullTransport, outputStream);
   }
 
   @Override public void stopRecording() {
