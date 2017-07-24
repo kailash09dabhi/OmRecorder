@@ -16,6 +16,7 @@
 package omrecorder;
 
 import java.io.File;
+import java.io.OutputStream;
 
 /**
  * {@code Pcm} is recorder for recording audio in wav format.
@@ -26,5 +27,9 @@ import java.io.File;
 final class Pcm extends AbstractRecorder {
   public Pcm(PullTransport pullTransport, File file) {
     super(pullTransport, file);
+  }
+
+  public Pcm(PullTransport pullTransport, OutputStream outputStream) {
+    super(pullTransport, outputStream);
   }
 }

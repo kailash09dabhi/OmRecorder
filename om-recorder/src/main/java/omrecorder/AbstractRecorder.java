@@ -30,7 +30,7 @@ import java.util.concurrent.Executors;
  */
 public abstract class AbstractRecorder implements Recorder {
   protected final PullTransport pullTransport;
-  protected final File file;
+  protected File file;
   private final ExecutorService executorService = Executors.newSingleThreadExecutor();
   private OutputStream outputStream;
   private final Runnable recordingTask = new Runnable() {
@@ -50,8 +50,15 @@ public abstract class AbstractRecorder implements Recorder {
     this.file = file;
   }
 
+  protected AbstractRecorder(PullTransport pullTransport, OutputStream outputStream) {
+    this.pullTransport = pullTransport;
+    this.outputStream = outputStream;
+  }
+
   @Override public void startRecording() {
-    outputStream = outputStream(file);
+    if (outputStream == null && file != null) {
+      outputStream = outputStream(file);
+    }
     executorService.submit(recordingTask);
   }
 
