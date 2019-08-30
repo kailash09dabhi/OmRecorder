@@ -15,11 +15,15 @@
  */
 package com.kingbull.recorder;
 
+import android.Manifest;
+import android.content.pm.PackageManager;
 import android.media.AudioFormat;
 import android.media.MediaRecorder;
 import android.os.Bundle;
 import android.os.Environment;
 import android.support.annotation.NonNull;
+import android.support.v4.app.ActivityCompat;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
@@ -48,6 +52,8 @@ public class PcmRecorderActivity extends AppCompatActivity {
   CheckBox skipSilence;
   Button pauseResumeButton;
 
+  private int REQUEST_PERMISSION_STATUS = 0;
+
   @Override protected void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
     setContentView(R.layout.activity_recorder);
@@ -67,6 +73,13 @@ public class PcmRecorderActivity extends AppCompatActivity {
     recordButton = (ImageView) findViewById(R.id.recordButton);
     recordButton.setOnClickListener(new View.OnClickListener() {
       @Override public void onClick(View view) {
+        if (ContextCompat.checkSelfPermission( PcmRecorderActivity.this, Manifest.permission.RECORD_AUDIO) != PackageManager.PERMISSION_GRANTED){
+          // Permission is not granted, ask for permission.
+          ActivityCompat.requestPermissions(PcmRecorderActivity.this, new String[]{Manifest.permission.RECORD_AUDIO}, REQUEST_PERMISSION_STATUS);
+        } else{
+          // Permission is granted!
+          recorder.startRecording();
+        }
         recorder.startRecording();
         skipSilence.setEnabled(false);
       }
@@ -152,6 +165,10 @@ public class PcmRecorderActivity extends AppCompatActivity {
   }
 
   @NonNull private File file() {
-    return new File(Environment.getExternalStorageDirectory(), "kailashdabhi.pcm");
+    // For external storage use this!
+    //return new File(Environment.getExternalStorageDirectory(), "kailashdabhi.pcm");
+
+    // For internal storage use this!
+    return new File(getApplicationContext().getFilesDir(), "kailashdabhi.pcm");
   }
 }
