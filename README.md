@@ -4,6 +4,11 @@
 Om Recorder
 ============
 
+### Grab maintenance
+
+The owner in not maintaining the library anymore and to fix any issue
+Pax App Core has decided to host the original repo under local artifactory.
+
 ![Logo](website/static/om.png)
 
 A Simple Pcm / Wav audio recorder with nice api. 

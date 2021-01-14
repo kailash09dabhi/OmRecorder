@@ -1,6 +1,6 @@
 *.iml
 .gradle
-/.idea/workspace.xml
+/.idea
 /.idea/libraries
 .DS_Store
 /build

@@ -18,11 +18,6 @@ android {
   }
 }
 ext {
-  // Where you will see your artifact in Bintray's web interface
-  // The "bintrayName" should match the name of the Bintray repro.
-  bintrayRepo = 'maven'
-  bintrayName = 'om-recorder' // Has to be same as your library module name
-
   // Maven metadata
   publishedGroupId = 'com.kailashdabhi'
   libraryName = 'OmRecorder'
@@ -30,18 +25,14 @@ ext {
   // module. The artifact name needs to match the name of the library.
   artifact = 'om-recorder' // Has to be same as your library module name
 
-  // Your github repo link
+  // Developer's github repo link
   siteUrl = 'https://github.com/kailash09dabhi/OmRecorder'
   gitUrl = 'https://github.com/kailash09dabhi/OmRecorder.git'
 
   libraryDescription =
       'A fluent api wrapper of AudioRecord object to record Pcm & Wav file. There is a listner apis' +
           ' to have audio pulling and also silence detection.'
-  libraryVersion = '1.1.5'
-
-  developerId = 'kailash09dabhi'
-  developerName = 'Kailash Dabhi'
-  developerEmail = 'kailash09dabhi@gmail.com'
+  libraryVersion = '1.1.6-grab'
 
   licenseName = 'The Apache Software License, Version 2.0'
   licenseUrl = 'http://www.apache.org/licenses/LICENSE-2.0.txt'
@@ -56,6 +47,3 @@ tasks.withType(Javadoc) {
   options.addStringOption('Xdoclint:none', '-quiet')
   options.addStringOption('encoding', 'UTF-8')
 }
-
-apply from: 'https://raw.githubusercontent.com/kailash09dabhi/JCenter/master/installv1.gradle'
-apply from: 'https://raw.githubusercontent.com/kailash09dabhi/JCenter/master/bintrayv1.gradle'
